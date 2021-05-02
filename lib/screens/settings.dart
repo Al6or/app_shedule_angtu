@@ -2,7 +2,7 @@ import 'package:angtu_shedule_flutter/appData/Services.dart';
 import 'package:angtu_shedule_flutter/models/Group.dart';
 import 'package:angtu_shedule_flutter/models/UserTest.dart';
 import 'package:flutter/material.dart';
-import 'globals.dart' as globals;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingsScreen extends StatefulWidget {
   static const String routeName = "/settings";
@@ -11,7 +11,30 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-  String gpValue = 'pf';
+  String fcValue = 'выбрать факультет';
+  String gpValue = 'выбрать группу';
+  //состояние при запуске
+  @override
+  void initState() {
+    super.initState();
+    _loadCounter();
+  }
+
+  //Значение fcValue загрузки при запуске
+  _loadCounter() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      fcValue = prefs.getString('fcValue') ?? 'null';
+    });
+  }
+
+  //сохранение значение fcValue
+  _incrementCounter() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      prefs.setString('fcValue', fcValue);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +46,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           children: <Widget>[
             ListTile(
               title: Text("Факультеты "),
-              trailing: Text(globals.nameFaculty),
+              trailing: Text(fcValue),
               onTap: () {
                 _awaitReturnValueListFaculty(context);
               },
@@ -35,6 +58,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 _awaitReturnValueListGroup(context);
               },
             ),
+            ElevatedButton(
+              child: Text('Сохранить'),
+              style: ElevatedButton.styleFrom(
+                primary: Colors.teal,
+                onPrimary: Colors.white,
+                onSurface: Colors.grey,
+              ),
+              onPressed: () {
+                _incrementCounter();
+              },
+            )
           ],
         ));
   }
@@ -49,7 +83,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         ));
     // после того, как вернется результат ListFaculty, обновит текстовый виджет с ним
     setState(() {
-      globals.nameFaculty = result ?? 'null';
+      fcValue = result ?? 'null';
     });
   }
 
@@ -111,7 +145,7 @@ class _ListFacultyState extends State<ListFaculty> {
                 trailing: Icon(Icons.keyboard_arrow_right),
                 onTap: () {
                   setState(() {
-                    returnNameValue = user.id.toString();
+                    returnNameValue = user.name.toString();
                     _sendDataBack(context);
                   });
                 });

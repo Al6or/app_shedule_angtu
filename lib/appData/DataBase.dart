@@ -1,4 +1,4 @@
-import 'package:angtu_shedule_flutter/models/Setting.dart';
+/*import 'package:angtu_shedule_flutter/models/Setting.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:sqflite/sqlite_api.dart';
 import 'package:path/path.dart';
@@ -67,4 +67,4 @@ class DBProvider {
       return resMap.isNotEmpty ? resMap : Null;
     }
   }
-}
+}*/

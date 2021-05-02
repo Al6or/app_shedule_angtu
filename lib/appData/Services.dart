@@ -1,9 +1,6 @@
-import 'dart:convert';
-
 import 'package:angtu_shedule_flutter/models/Group.dart';
 import 'package:angtu_shedule_flutter/models/UserTest.dart';
 import 'package:http/http.dart' as http;
-import 'package:angtu_shedule_flutter/screens/globals.dart' as globals;
 
 class Services {
   static const String url = 'http://jsonplaceholder.typicode.com/users';
