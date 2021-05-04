@@ -66,7 +66,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 onSurface: Colors.grey,
               ),
               onPressed: () {
+                //Сохраням значения
                 _incrementCounter();
+                //Возвращаемся к главной странице
+                Navigator.of(context).pushNamed("/");
               },
             )
           ],
