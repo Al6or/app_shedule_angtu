@@ -145,7 +145,7 @@ class _ListFacultyState extends State<ListFaculty> {
                 trailing: Icon(Icons.keyboard_arrow_right),
                 onTap: () {
                   setState(() {
-                    returnNameValue = user.name.toString();
+                    returnNameValue = user.id.toString();
                     _sendDataBack(context);
                   });
                 });

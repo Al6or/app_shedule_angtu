@@ -33,8 +33,8 @@ class Services {
     }
   }
 
-  static Future<List<Group>> getExam() async {
-    String urlGp = 'https://jsonplaceholder.typicode.com/comments';
+  static Future<List<Group>> getExam(int k) async {
+    String urlGp = 'https://jsonplaceholder.typicode.com/posts/$k/comments';
     try {
       final response = await http.get(Uri.parse(urlGp));
       if (200 == response.statusCode) {
