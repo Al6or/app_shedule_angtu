@@ -23,7 +23,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  
+  grouped_list: ^4.0.0
+
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -31,7 +32,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   http: ^0.13.2
   shared_preferences: ^2.0.5
-
+ 
 dev_dependencies:
   flutter_test:
     sdk: flutter

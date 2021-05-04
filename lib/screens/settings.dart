@@ -24,7 +24,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   _loadCounter() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
-      fcValue = prefs.getString('fcValue') ?? 'null';
+      fcValue = prefs.getString('fcValue') ?? 'выбрать факультет';
     });
   }
 
@@ -83,7 +83,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         ));
     // после того, как вернется результат ListFaculty, обновит текстовый виджет с ним
     setState(() {
-      fcValue = result ?? 'null';
+      fcValue = result ?? 'выбрать факультет';
     });
   }
 
@@ -130,7 +130,7 @@ class _ListFacultyState extends State<ListFaculty> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(_loading ? 'Загрузка...' : 'Пользователи'),
+        title: Text(_loading ? 'Загрузка...' : 'Факультеты'),
       ),
       body: Container(
         color: Colors.white,

@@ -32,4 +32,19 @@ class Services {
       return <Group>[];
     }
   }
+
+  static Future<List<Group>> getExam() async {
+    String urlGp = 'https://jsonplaceholder.typicode.com/comments';
+    try {
+      final response = await http.get(Uri.parse(urlGp));
+      if (200 == response.statusCode) {
+        final List<Group> group = groupFromJson(response.body);
+        return group;
+      } else {
+        return <Group>[];
+      }
+    } catch (e) {
+      return <Group>[];
+    }
+  }
 }
