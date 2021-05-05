@@ -7,9 +7,9 @@ import 'package:angtu_shedule_flutter/screens/settings.dart';
 import 'package:angtu_shedule_flutter/screens/home.dart';
 import 'package:flutter/material.dart';
 
-bool _loadFackulty() {
+bool _loadGroup() {
   bool n = false;
-  if (SharedPrefs().fackulty != 'выбрать факультет') {
+  if (SharedPrefs().group != 'выбрать группу') {
     n = true;
   }
   return n;
@@ -21,15 +21,13 @@ Future<void> main() async {
   await SharedPrefs().init();
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
-
-    home: _loadFackulty()
-        ? HomeScreen()
-        : SettingsScreen(), // маршрут главная страница "home" - неявно '/'
+    home: _loadGroup() ? HomeScreen() : SettingsScreen(),
     routes: <String, WidgetBuilder>{
       // определить маршруты
       SettingsScreen.routeName: (BuildContext context) => SettingsScreen(),
       InfoScreen.routeName: (BuildContext context) => InfoScreen(),
       ExamScreen.routeName: (BuildContext context) => ExamScreen(),
+      HomeScreen.routeName: (BuildContext context) => HomeScreen(),
     },
   ));
 }

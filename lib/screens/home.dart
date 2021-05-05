@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:angtu_shedule_flutter/screens/settings.dart';
 
 class HomeScreen extends StatefulWidget {
+  static const String routeName = "/home";
   @override
   HomeScreenState createState() => HomeScreenState();
 }
@@ -48,7 +49,7 @@ class HomeScreenState extends State<HomeScreen> {
     //пункты меню
     var myNavChildren = [
       headerChild,
-      getNavItem(Icons.home, "Домашняя страница", "/"),
+      getNavItem(Icons.home, "Домашняя страница", HomeScreen.routeName),
       getNavItem(Icons.info, "Информация об АнГТУ", InfoScreen.routeName),
       getNavItem(Icons.settings, "Настройки", SettingsScreen.routeName),
       getNavItem(Icons.assignment_late, "Экзамен", ExamScreen.routeName),

@@ -1,5 +1,5 @@
 import 'package:angtu_shedule_flutter/appData/Services.dart';
-import 'package:angtu_shedule_flutter/models/m_Group.dart';
+import 'package:angtu_shedule_flutter/models/Groups.dart';
 import 'package:angtu_shedule_flutter/screens/globals.dart';
 import 'package:flutter/material.dart';
 import 'package:grouped_list/grouped_list.dart';
