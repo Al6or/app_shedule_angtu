@@ -1,5 +1,7 @@
 library my_prj.globals;
 
+import 'dart:io';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 //глобальные переменные
@@ -22,5 +24,14 @@ class SharedPrefs {
 
   set fackulty(String value) {
     _sharedPrefs.setString(fcValue, value);
+  }
+}
+
+class MyHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext context) {
+    return super.createHttpClient(context)
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
   }
 }

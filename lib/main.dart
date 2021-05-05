@@ -1,10 +1,11 @@
+import 'dart:io';
+
 import 'package:angtu_shedule_flutter/screens/exam.dart';
 import 'package:angtu_shedule_flutter/screens/globals.dart';
 import 'package:angtu_shedule_flutter/screens/info.dart';
 import 'package:angtu_shedule_flutter/screens/settings.dart';
 import 'package:angtu_shedule_flutter/screens/home.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 bool _loadFackulty() {
   bool n = false;
@@ -15,6 +16,7 @@ bool _loadFackulty() {
 }
 
 Future<void> main() async {
+  HttpOverrides.global = new MyHttpOverrides();
   WidgetsFlutterBinding.ensureInitialized();
   await SharedPrefs().init();
   runApp(MaterialApp(

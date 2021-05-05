@@ -1,10 +1,27 @@
 import 'package:angtu_shedule_flutter/appData/Services.dart';
-import 'package:angtu_shedule_flutter/models/Group.dart';
+import 'package:angtu_shedule_flutter/models/m_Group.dart';
 import 'package:angtu_shedule_flutter/screens/globals.dart';
 import 'package:flutter/material.dart';
 import 'package:grouped_list/grouped_list.dart';
 
-class ExamScreen extends StatefulWidget {
+class ExamScreen extends StatelessWidget {
+  static const String routeName = "/exam";
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Информация об АнГТУ"),
+      ),
+      body: Container(
+          child: Center(
+        child: Text("Экран информация"),
+      )),
+    );
+  }
+}
+
+/*class ExamScreen extends StatefulWidget {
   static const String routeName = "/exam";
   @override
   _ListState createState() => _ListState();
@@ -62,4 +79,4 @@ class _ListState extends State<ExamScreen> {
       ),
     );
   }
-}
+}*/

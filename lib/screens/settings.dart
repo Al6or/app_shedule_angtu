@@ -1,6 +1,6 @@
 import 'package:angtu_shedule_flutter/appData/Services.dart';
-import 'package:angtu_shedule_flutter/models/Group.dart';
-import 'package:angtu_shedule_flutter/models/UserTest.dart';
+import 'package:angtu_shedule_flutter/models/m_Group.dart';
+import 'package:angtu_shedule_flutter/models/m_Faculties.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -69,6 +69,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 //Сохраням значения
                 _incrementCounter();
                 //Возвращаемся к главной странице
+                Navigator.of(context).pop();
                 Navigator.of(context).pushNamed("/");
               },
             )
@@ -90,7 +91,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     });
   }
 
-  //выбранный факультет
+  //выбранная группа
   void _awaitReturnValueListGroup(BuildContext context) async {
     // запускаем ListFaculty и ждем, пока он вернеться с результатом
     final result = await Navigator.push(
@@ -114,16 +115,16 @@ class ListFaculty extends StatefulWidget {
 String returnNameValue;
 
 class _ListFacultyState extends State<ListFaculty> {
-  List<Users> _users;
+  List<Faculties> _faculties;
   bool _loading;
 
   @override
   void initState() {
     super.initState();
     _loading = true;
-    Services.getUsers().then((users) {
+    Services.getFaculties().then((faculties) {
       setState(() {
-        _users = users;
+        _faculties = faculties;
         _loading = false;
       });
     });
@@ -138,17 +139,17 @@ class _ListFacultyState extends State<ListFaculty> {
       body: Container(
         color: Colors.white,
         child: ListView.builder(
-          itemCount: null == _users ? 0 : _users.length,
+          itemCount: null == _faculties ? 0 : _faculties.length,
           itemBuilder: (context, index) {
-            Users user = _users[index];
+            Faculties faculties = _faculties[index];
             return ListTile(
-                title: Text(user.name),
-                subtitle: Text(user.email),
+                title: Text(faculties.theFaculty),
                 leading: Icon(Icons.label),
                 trailing: Icon(Icons.keyboard_arrow_right),
                 onTap: () {
                   setState(() {
-                    returnNameValue = user.id.toString();
+                    returnNameValue = faculties.theFaculty;
+                    print(returnNameValue);
                     _sendDataBack(context);
                   });
                 });
@@ -173,14 +174,14 @@ class ListGroup extends StatefulWidget {
 
 class _ListGroupState extends State<ListGroup> {
   String nameVale;
-  List<Group> _group;
+  List<Groups> _group;
   bool _loading;
 
   @override
   void initState() {
     super.initState();
     _loading = true;
-    Services.getGroupId(int.parse(returnNameValue)).then((group) {
+    Services.getGroup(returnNameValue).then((group) {
       setState(() {
         _group = group;
         _loading = false;
@@ -192,22 +193,21 @@ class _ListGroupState extends State<ListGroup> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(_loading ? 'Загрузка...' : 'Пользователи'),
+        title: Text(_loading ? 'Загрузка...' : 'Группы'),
       ),
       body: Container(
         color: Colors.white,
         child: ListView.builder(
           itemCount: null == _group ? 0 : _group.length,
           itemBuilder: (context, index) {
-            Group group = _group[index];
+            Groups group = _group[index];
             return ListTile(
-                title: Text(group.name),
-                subtitle: Text(group.postId.toString()),
+                title: Text(group.theGrups),
                 leading: Icon(Icons.label),
                 trailing: Icon(Icons.keyboard_arrow_right),
                 onTap: () {
                   setState(() {
-                    nameVale = group.name;
+                    nameVale = group.theGrups;
                     _sendDataBack(context);
                   });
                 });
