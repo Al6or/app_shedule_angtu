@@ -1,6 +1,7 @@
 import 'package:angtu_shedule_flutter/models/Chairs.dart';
 import 'package:angtu_shedule_flutter/models/Groups.dart';
 import 'package:angtu_shedule_flutter/models/Faculties.dart';
+import 'package:angtu_shedule_flutter/models/Shedule.dart';
 import 'package:http/http.dart' as http;
 
 class Services {
@@ -52,6 +53,25 @@ class Services {
       }
     } catch (e) {
       return <Chairs>[] ?? 'Список пуст';
+    }
+  }
+
+  //большой список расписание группы/(чет/нечет)
+  //../academic_plan_grup_week/{the_grup}/{the_weeks}
+  static Future<List<SheduleFalse>> getShedule(
+      String nameGroup, bool week) async {
+    String url =
+        'https://10.0.2.2:5001/academic_plan_grup_week/$nameGroup/$week';
+    try {
+      final response = await http.get(Uri.parse(url));
+      if (200 == response.statusCode) {
+        final List<SheduleFalse> chairs = sheduleFalseFromJson(response.body);
+        return chairs;
+      } else {
+        return <SheduleFalse>[] ?? 'Список пуст';
+      }
+    } catch (e) {
+      return <SheduleFalse>[] ?? 'Список пуст';
     }
   }
 }

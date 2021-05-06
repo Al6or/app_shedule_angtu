@@ -12,20 +12,16 @@ String groupsToJson(List<Groups> data) =>
 
 class Groups {
   Groups({
-    this.theFaculty,
     this.theGrups,
   });
 
-  String theFaculty;
   String theGrups;
 
   factory Groups.fromJson(Map<String, dynamic> json) => Groups(
-        theFaculty: json["the_faculty"],
         theGrups: json["the_grups"],
       );
 
   Map<String, dynamic> toJson() => {
-        "the_faculty": theFaculty,
         "the_grups": theGrups,
       };
 }
