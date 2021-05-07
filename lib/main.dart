@@ -3,13 +3,17 @@ import 'dart:io';
 import 'package:angtu_shedule_flutter/screens/exam.dart';
 import 'package:angtu_shedule_flutter/screens/globals.dart';
 import 'package:angtu_shedule_flutter/screens/info.dart';
-import 'package:angtu_shedule_flutter/screens/settings.dart';
+import 'package:angtu_shedule_flutter/screens/introScreens/introSettings.dart';
+import 'package:angtu_shedule_flutter/screens/introScreens/studSettings.dart';
+import 'package:angtu_shedule_flutter/screens/introScreens/teachSettings.dart';
 import 'package:angtu_shedule_flutter/screens/home.dart';
 import 'package:flutter/material.dart';
 
-bool _loadGroup() {
+bool _load() {
   bool n = false;
-  if (SharedPrefs().group != 'выбрать группу') {
+  if (SharedPrefs().group != selectGroup &&
+      SharedPrefs().user != selectUser &&
+      SharedPrefs().teacher != selectTeacher) {
     n = true;
   }
   return n;
@@ -21,13 +25,18 @@ Future<void> main() async {
   await SharedPrefs().init();
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
-    home: _loadGroup() ? HomeScreen() : SettingsScreen(),
+    home: _load() ? HomeScreen() : IntroSettingScreen(),
     routes: <String, WidgetBuilder>{
       // определить маршруты
-      SettingsScreen.routeName: (BuildContext context) => SettingsScreen(),
       InfoScreen.routeName: (BuildContext context) => InfoScreen(),
       ExamScreen.routeName: (BuildContext context) => ExamScreen(),
       HomeScreen.routeName: (BuildContext context) => HomeScreen(),
+      IntroSettingScreen.routeName: (BuildContext context) =>
+          IntroSettingScreen(),
+      StudSettingScreen.routeName: (BuildContext context) =>
+          StudSettingScreen(),
+      TeachSettingScreen.routeName: (BuildContext context) =>
+          TeachSettingScreen(),
     },
   ));
 }

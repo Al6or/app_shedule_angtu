@@ -1,6 +1,7 @@
 //список кафедр
 import 'package:angtu_shedule_flutter/appData/Services.dart';
 import 'package:angtu_shedule_flutter/models/Chairs.dart';
+import 'package:angtu_shedule_flutter/screens/globals.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -30,7 +31,8 @@ class _ListChairState extends State<ListChair> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(_loading ? 'Загрузка...' : 'Кафедры'),
+        title: Text(_loading ? valueLoad : selectChair),
+        backgroundColor: Color(0xff153f65),
       ),
       body: Container(
         color: Colors.white,
@@ -40,8 +42,14 @@ class _ListChairState extends State<ListChair> {
             Chairs chairs = _chairs[index];
             return ListTile(
                 title: Text(chairs.theChair),
-                leading: Icon(Icons.label),
-                trailing: Icon(Icons.keyboard_arrow_right),
+                leading: Icon(
+                  Icons.auto_stories,
+                  color: Color(0xff153f65),
+                ),
+                trailing: Icon(
+                  Icons.arrow_right,
+                  color: Color(0xff153f65),
+                ),
                 onTap: () {
                   setState(() {
                     returnNameValue = chairs.theChair;

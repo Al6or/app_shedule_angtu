@@ -1,6 +1,7 @@
 //список факультетов
 import 'package:angtu_shedule_flutter/appData/Services.dart';
 import 'package:angtu_shedule_flutter/models/Faculties.dart';
+import 'package:angtu_shedule_flutter/screens/globals.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -30,7 +31,8 @@ class _ListFacultyState extends State<ListFaculty> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(_loading ? 'Загрузка...' : 'Факультеты'),
+        title: Text(_loading ? valueLoad : selectFaculty),
+        backgroundColor: Color(0xff153f65),
       ),
       body: Container(
         color: Colors.white,
@@ -40,8 +42,14 @@ class _ListFacultyState extends State<ListFaculty> {
             Faculties faculties = _faculties[index];
             return ListTile(
                 title: Text(faculties.theFaculty),
-                leading: Icon(Icons.label),
-                trailing: Icon(Icons.keyboard_arrow_right),
+                leading: Icon(
+                  Icons.import_contacts,
+                  color: Color(0xff153f65),
+                ),
+                trailing: Icon(
+                  Icons.arrow_right,
+                  color: Color(0xff153f65),
+                ),
                 onTap: () {
                   setState(() {
                     returnNameValue = faculties.theFaculty;

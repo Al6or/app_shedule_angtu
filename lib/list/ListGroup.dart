@@ -31,7 +31,8 @@ class _ListGroupState extends State<ListGroup> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(_loading ? 'Загрузка...' : 'Группы'),
+        title: Text(_loading ? valueLoad : selectGroup),
+        backgroundColor: Color(0xff153f65),
       ),
       body: Container(
         color: Colors.white,
@@ -41,8 +42,14 @@ class _ListGroupState extends State<ListGroup> {
             Groups group = _group[index];
             return ListTile(
                 title: Text(group.theGrups),
-                leading: Icon(Icons.label),
-                trailing: Icon(Icons.keyboard_arrow_right),
+                leading: Icon(
+                  Icons.people_alt,
+                  color: Color(0xff153f65),
+                ),
+                trailing: Icon(
+                  Icons.arrow_right,
+                  color: Color(0xff153f65),
+                ),
                 onTap: () {
                   setState(() {
                     returnNameValue = group.theGrups;

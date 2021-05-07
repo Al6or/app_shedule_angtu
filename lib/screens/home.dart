@@ -3,9 +3,9 @@ import 'package:angtu_shedule_flutter/models/Shedule.dart';
 import 'package:angtu_shedule_flutter/screens/exam.dart';
 import 'package:angtu_shedule_flutter/screens/globals.dart';
 import 'package:angtu_shedule_flutter/screens/info.dart';
+import 'package:angtu_shedule_flutter/screens/introScreens/introSettings.dart';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:angtu_shedule_flutter/screens/settings.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:week_of_year/week_of_year.dart';
 
@@ -13,6 +13,17 @@ class HomeScreen extends StatefulWidget {
   static const String routeName = "/home";
   @override
   HomeScreenState createState() => HomeScreenState();
+}
+
+//Подзаголовок в меню
+String whoYou() {
+  String who = SharedPrefs().user;
+  if (SharedPrefs().user == 'студент') {
+    who += " " + SharedPrefs().group;
+  } else {
+    who += " " + SharedPrefs().teacher;
+  }
+  return who;
 }
 
 class HomeScreenState extends State<HomeScreen> {
@@ -25,15 +36,29 @@ class HomeScreenState extends State<HomeScreen> {
       padding: EdgeInsets.zero,
       child: UserAccountsDrawerHeader(
         accountName: Text('Меню'),
-        accountEmail: Text('Группа: ' + SharedPrefs().group),
-        decoration: BoxDecoration(color: Colors.teal),
+        accountEmail: Text(whoYou()),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topRight,
+            end: Alignment.bottomLeft,
+            stops: [0, 0.1, 0.5, 0.8, 1],
+            colors: [
+              Color(0xffedf4fe),
+              Color(0xffc1e3ff),
+              Color(0xff1085c9),
+              Color(0xff153f65),
+              Color(0xff03131f),
+            ],
+          ),
+        ),
       ),
     );
     //всплывающие окно с информацией
     var aboutChild = AboutListTile(
-        child: Text("о программе"),
-        applicationName: "Расписание АнГТУ\n30.03.2021",
-        applicationVersion: "v1.0.0",
+        child: Text("Данные о приложение"),
+        applicationName: "Расписание АнГТУ\n30.03.2021 \nv1.0.0",
+        applicationVersion:
+            "REST API:\nЯкимов Артем Вадимович\nПриложение:\nБорисова Александра Евгеньевна",
         applicationIcon: Icon(Icons.adb),
         icon: Icon(Icons.info));
     //навигация меню
@@ -55,11 +80,14 @@ class HomeScreenState extends State<HomeScreen> {
     //пункты меню
     var myNavChildren = [
       headerChild,
-      getNavItem(Icons.home, "Домашняя страница", HomeScreen.routeName),
-      getNavItem(Icons.assignment_late, "Экзамен", ExamScreen.routeName),
-      getNavItem(Icons.info, "Информация об АнГТУ", InfoScreen.routeName),
-      getNavItem(Icons.settings, "Настройки", SettingsScreen.routeName),
-      aboutChild
+      getNavItem(Icons.home, "Главный экран (" + headShedule + ")",
+          HomeScreen.routeName),
+      getNavItem(
+          Icons.assignment_late, headShedule + " сесии", ExamScreen.routeName),
+      getNavItem(Icons.info, "Информация о унивирситете", InfoScreen.routeName),
+      // getNavItem(Icons.settings, "Настройки", SettingsScreen.routeName),
+      aboutChild,
+      getNavItem(Icons.settings, "Выйти", IntroSettingScreen.routeName),
     ];
 
     ListView listView = ListView(children: myNavChildren);
@@ -105,9 +133,11 @@ class HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var test = 'Назад';
     return Scaffold(
-      appBar: AppBar(title: Text("Расписание")),
+      appBar: AppBar(
+        title: Text(headShedule),
+        backgroundColor: Color(0xff153f65),
+      ),
       body: SizedBox.expand(
         child: PageView(
           controller: _pageController,
@@ -117,6 +147,20 @@ class HomeScreenState extends State<HomeScreen> {
           children: <Widget>[
             //четная неделя
             Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topRight,
+                  end: Alignment.bottomLeft,
+                  stops: [0, 0.1, 0.5, 0.8, 1],
+                  colors: [
+                    Color(0xffedf4fe),
+                    Color(0xffc1e3ff),
+                    Color(0xff1085c9),
+                    Color(0xff153f65),
+                    Color(0xff03131f),
+                  ],
+                ),
+              ),
               child: GroupedListView<SheduleFalse, String>(
                 elements: _groupFalse,
                 groupBy: (element) => element.theDaysWeek,
@@ -124,7 +168,7 @@ class HomeScreenState extends State<HomeScreen> {
                 itemComparator: (item1, item2) =>
                     item1.theDiscipline.compareTo(item2.theDiscipline),
                 order: GroupedListOrder.DESC,
-                useStickyGroupSeparators: true,
+                // useStickyGroupSeparators: true,
                 groupSeparatorBuilder: (String value) => Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
@@ -162,6 +206,20 @@ class HomeScreenState extends State<HomeScreen> {
             ),
             //Нечетная неделя
             Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  stops: [0, 0.1, 0.5, 0.8, 1],
+                  colors: [
+                    Color(0xffedf4fe),
+                    Color(0xffc1e3ff),
+                    Color(0xff1085c9),
+                    Color(0xff153f65),
+                    Color(0xff03131f),
+                  ],
+                ),
+              ),
               child: GroupedListView<SheduleFalse, String>(
                 elements: _groupTrue,
                 groupBy: (element) => element.theDaysWeek,
@@ -180,25 +238,15 @@ class HomeScreenState extends State<HomeScreen> {
                 ),
                 itemBuilder: (c, element) {
                   return Card(
-                    elevation: 8.0,
                     margin:
                         EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
                     child: Container(
                       child: ListTile(
-                        contentPadding: EdgeInsets.symmetric(
-                            horizontal: 20.0, vertical: 10.0),
-                        leading: Icon(Icons.accessible),
+                        leading: Text(element.theTime),
                         title: Text(element.theDiscipline),
-                        subtitle: Text(element.theCorpus +
-                            " " +
-                            element.theTime +
-                            " " +
-                            element.theAudience +
-                            "\n" +
-                            element.theTypeExperience +
-                            " " +
-                            element.theAboutTheTeacher),
-                        trailing: Icon(Icons.arrow_forward),
+                        subtitle: Text(element.theAboutTheTeacher),
+                        trailing: Text(
+                            element.theCorpus + "\n" + element.theAudience),
                       ),
                     ),
                   );
@@ -210,12 +258,15 @@ class HomeScreenState extends State<HomeScreen> {
       ),
       // Меню
       drawer: getNavDrawer(context),
+      //навигатор нижний
       bottomNavigationBar: BottomNavyBar(
+        backgroundColor: Color(0xff153f65),
         selectedIndex: _currentIndex,
         onItemSelected: (index) {
           setState(() => _currentIndex = index);
           _pageController.jumpToPage(index);
         },
+        mainAxisAlignment: MainAxisAlignment.center,
         items: <BottomNavyBarItem>[
           BottomNavyBarItem(title: Text('Чётная'), icon: Icon(Icons.home)),
           BottomNavyBarItem(title: Text('Нечётная'), icon: Icon(Icons.apps)),

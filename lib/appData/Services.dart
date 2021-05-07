@@ -2,6 +2,7 @@ import 'package:angtu_shedule_flutter/models/Chairs.dart';
 import 'package:angtu_shedule_flutter/models/Groups.dart';
 import 'package:angtu_shedule_flutter/models/Faculties.dart';
 import 'package:angtu_shedule_flutter/models/Shedule.dart';
+import 'package:angtu_shedule_flutter/models/Teachers.dart';
 import 'package:http/http.dart' as http;
 
 class Services {
@@ -24,8 +25,8 @@ class Services {
 
 //список групп
 //../faculty_grup/{the_facult}
-  static Future<List<Groups>> getGroups(String nameGroup) async {
-    String url = 'https://10.0.2.2:5001/faculty_grup/$nameGroup';
+  static Future<List<Groups>> getGroups(String nameFaculty) async {
+    String url = 'https://10.0.2.2:5001/faculty_grup/$nameFaculty';
     try {
       final response = await http.get(Uri.parse(url));
       if (200 == response.statusCode) {
@@ -53,6 +54,23 @@ class Services {
       }
     } catch (e) {
       return <Chairs>[] ?? 'Список пуст';
+    }
+  }
+
+  //список преподавателей по кафедрам
+  //../cathedra_people/{the_cathedra}
+  static Future<List<Teachers>> getTeacher(String nameTeacher) async {
+    String url = 'https://10.0.2.2:5001/cathedra_people/$nameTeacher';
+    try {
+      final response = await http.get(Uri.parse(url));
+      if (200 == response.statusCode) {
+        final List<Teachers> teachers = teachersFromJson(response.body);
+        return teachers;
+      } else {
+        return <Teachers>[];
+      }
+    } catch (e) {
+      return <Teachers>[];
     }
   }
 
