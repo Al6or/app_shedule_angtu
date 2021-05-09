@@ -27,7 +27,7 @@ class StudSettingScreenState extends State<StudSettingScreen> {
         body: Container(
             decoration: BoxDecoration(
                 image: DecorationImage(
-                    image: AssetImage('assets/images/bg1.jpg'),
+                    image: AssetImage('assets/images/bg3.jpg'),
                     fit: BoxFit.cover)),
             child: BackdropFilter(
                 filter: ImageFilter.blur(sigmaX: 50.0, sigmaY: 50.0),

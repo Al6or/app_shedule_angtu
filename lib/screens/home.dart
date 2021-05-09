@@ -165,8 +165,8 @@ class HomeScreenState extends State<HomeScreen> {
                 elements: _groupFalse,
                 groupBy: (element) => element.theDaysWeek,
                 groupComparator: (value1, value2) => value2.compareTo(value1),
-                itemComparator: (item1, item2) =>
-                    item1.theDiscipline.compareTo(item2.theDiscipline),
+                itemComparator: (item2, item1) =>
+                    item1.theTime.compareTo(item2.theTime),
                 order: GroupedListOrder.DESC,
                 // useStickyGroupSeparators: true,
                 groupSeparatorBuilder: (String value) => Padding(
