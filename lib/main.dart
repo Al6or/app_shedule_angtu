@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:angtu_shedule_flutter/screens/CalendarEvenOdd.dart';
 import 'package:angtu_shedule_flutter/screens/exam.dart';
 import 'package:angtu_shedule_flutter/screens/globals.dart';
 import 'package:angtu_shedule_flutter/screens/info.dart';
@@ -27,8 +28,7 @@ Future<void> main() async {
   await SharedPrefs().init();
   initializeDateFormatting().then((_) => runApp(MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: StartPage(),
-        /*_load() ? HomeScreen() : IntroSettingScreen(),*/
+        home: _load() ? HomeScreen() : IntroSettingScreen(),
         routes: <String, WidgetBuilder>{
           // определить маршруты
           InfoScreen.routeName: (BuildContext context) => InfoScreen(),
@@ -40,6 +40,8 @@ Future<void> main() async {
               StudSettingScreen(),
           TeachSettingScreen.routeName: (BuildContext context) =>
               TeachSettingScreen(),
+          CalendarEvenOddScreen.routeName: (BuildContext context) =>
+              CalendarEvenOddScreen(),
         },
       )));
 }

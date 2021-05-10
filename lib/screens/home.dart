@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:angtu_shedule_flutter/appData/Services.dart';
 import 'package:angtu_shedule_flutter/models/Shedule.dart';
+import 'package:angtu_shedule_flutter/screens/CalendarEvenOdd.dart';
 import 'package:angtu_shedule_flutter/screens/exam.dart';
 import 'package:angtu_shedule_flutter/screens/globals.dart';
 import 'package:angtu_shedule_flutter/screens/info.dart';
@@ -11,6 +14,7 @@ import 'package:week_of_year/week_of_year.dart';
 
 class HomeScreen extends StatefulWidget {
   static const String routeName = "/home";
+
   @override
   HomeScreenState createState() => HomeScreenState();
 }
@@ -35,8 +39,14 @@ class HomeScreenState extends State<HomeScreen> {
       margin: EdgeInsets.zero,
       padding: EdgeInsets.zero,
       child: UserAccountsDrawerHeader(
-        accountName: Text('Меню'),
-        accountEmail: Text(whoYou()),
+        accountName: Text(
+          'Меню',
+          style: TextStyle(fontSize: 20),
+        ),
+        accountEmail: Text(
+          whoYou(),
+          style: TextStyle(fontSize: 15),
+        ),
         decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topRight,
@@ -60,7 +70,7 @@ class HomeScreenState extends State<HomeScreen> {
         applicationVersion:
             "REST API:\nЯкимов Артем Вадимович\nПриложение:\nБорисова Александра Евгеньевна",
         applicationIcon: Icon(Icons.adb),
-        icon: Icon(Icons.info));
+        icon: Icon(Icons.topic));
     //навигация меню
     ListTile getNavItem(var icon, String s, String routeName) {
       return ListTile(
@@ -77,17 +87,48 @@ class HomeScreenState extends State<HomeScreen> {
       );
     }
 
+//кнопка сменить пользователя
+    var userChild = ListTile(
+      leading: Icon(Icons.sync_rounded),
+      title: Text('Сменить пользователя'),
+      onTap: () {
+        setState(() {
+          SharedPrefs().fackulty = selectFaculty;
+          SharedPrefs().chair = selectChair;
+          SharedPrefs().group = selectGroup;
+          SharedPrefs().dateStart = selectDate;
+          SharedPrefs().teacher = selectTeacher;
+          SharedPrefs().routeNameSetting = '';
+          SharedPrefs().user = selectUser;
+          // pop - закрыть выдвижное меню
+          Navigator.of(context).pop();
+          // pushNamed -  перейти к маршруту
+          Navigator.of(context).pushNamed(IntroSettingScreen.routeName);
+        });
+      },
+    );
+    //кнопка выйти
+    var exitChild = ListTile(
+      leading: Icon(Icons.exit_to_app),
+      title: Text('Выйти'),
+      onTap: () {
+        setState(() {
+          exit(0);
+        });
+      },
+    );
+
     //пункты меню
     var myNavChildren = [
       headerChild,
-      getNavItem(Icons.home, "Главный экран (" + headShedule + ")",
+      getNavItem(Icons.wysiwyg_outlined, headShedule + " семестра",
           HomeScreen.routeName),
-      getNavItem(
-          Icons.assignment_late, headShedule + " сесии", ExamScreen.routeName),
+      getNavItem(Icons.today, headShedule + " сесии", ExamScreen.routeName),
       getNavItem(Icons.info, "Информация о унивирситете", InfoScreen.routeName),
-      // getNavItem(Icons.settings, "Настройки", SettingsScreen.routeName),
       aboutChild,
-      getNavItem(Icons.settings, "Выйти", IntroSettingScreen.routeName),
+      getNavItem(Icons.settings, "Настройки", SharedPrefs().routeNameSetting),
+      userChild,
+      exitChild,
     ];
 
     ListView listView = ListView(children: myNavChildren);
@@ -137,6 +178,16 @@ class HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         title: Text(headShedule),
         backgroundColor: Color(0xff153f65),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.calendar_today),
+            tooltip: 'Окрывается календарь',
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => CalendarEvenOddScreen()),
+            ),
+          ),
+        ],
       ),
       body: SizedBox.expand(
         child: PageView(
@@ -146,113 +197,9 @@ class HomeScreenState extends State<HomeScreen> {
           },
           children: <Widget>[
             //четная неделя
-            Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topRight,
-                  end: Alignment.bottomLeft,
-                  stops: [0, 0.1, 0.5, 0.8, 1],
-                  colors: [
-                    Color(0xffedf4fe),
-                    Color(0xffc1e3ff),
-                    Color(0xff1085c9),
-                    Color(0xff153f65),
-                    Color(0xff03131f),
-                  ],
-                ),
-              ),
-              child: GroupedListView<SheduleFalse, String>(
-                elements: _groupFalse,
-                groupBy: (element) => element.theDaysWeek,
-                groupComparator: (value1, value2) => value2.compareTo(value1),
-                itemComparator: (item2, item1) =>
-                    item1.theTime.compareTo(item2.theTime),
-                order: GroupedListOrder.DESC,
-                // useStickyGroupSeparators: true,
-                groupSeparatorBuilder: (String value) => Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    numberInText(value),
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  ),
-                ),
-                itemBuilder: (c, element) {
-                  return Card(
-                    elevation: 8.0,
-                    margin:
-                        EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
-                    child: Container(
-                      child: ListTile(
-                        contentPadding: EdgeInsets.symmetric(
-                            horizontal: 20.0, vertical: 10.0),
-                        leading: Icon(Icons.accessible),
-                        title: Text(element.theDiscipline),
-                        subtitle: Text(element.theCorpus +
-                            " " +
-                            element.theTime +
-                            " " +
-                            element.theAudience +
-                            "\n" +
-                            element.theTypeExperience +
-                            " " +
-                            element.theAboutTheTeacher),
-                        trailing: Icon(Icons.arrow_forward),
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
+            contTrue(_groupFalse),
             //Нечетная неделя
-            Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  stops: [0, 0.1, 0.5, 0.8, 1],
-                  colors: [
-                    Color(0xffedf4fe),
-                    Color(0xffc1e3ff),
-                    Color(0xff1085c9),
-                    Color(0xff153f65),
-                    Color(0xff03131f),
-                  ],
-                ),
-              ),
-              child: GroupedListView<SheduleFalse, String>(
-                elements: _groupTrue,
-                groupBy: (element) => element.theDaysWeek,
-                groupComparator: (value1, value2) => value2.compareTo(value1),
-                itemComparator: (item1, item2) =>
-                    item1.theDiscipline.compareTo(item2.theDiscipline),
-                order: GroupedListOrder.DESC,
-                useStickyGroupSeparators: true,
-                groupSeparatorBuilder: (String value) => Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    numberInText(value),
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  ),
-                ),
-                itemBuilder: (c, element) {
-                  return Card(
-                    margin:
-                        EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
-                    child: Container(
-                      child: ListTile(
-                        leading: Text(element.theTime),
-                        title: Text(element.theDiscipline),
-                        subtitle: Text(element.theAboutTheTeacher),
-                        trailing: Text(
-                            element.theCorpus + "\n" + element.theAudience),
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
+            contTrue(_groupTrue),
           ],
         ),
       ),
@@ -268,8 +215,14 @@ class HomeScreenState extends State<HomeScreen> {
         },
         mainAxisAlignment: MainAxisAlignment.center,
         items: <BottomNavyBarItem>[
-          BottomNavyBarItem(title: Text('Чётная'), icon: Icon(Icons.home)),
-          BottomNavyBarItem(title: Text('Нечётная'), icon: Icon(Icons.apps)),
+          BottomNavyBarItem(
+              title: Text('Чётная'),
+              icon: Icon(Icons.home),
+              activeColor: Colors.white),
+          BottomNavyBarItem(
+              title: Text('Нечётная'),
+              icon: Icon(Icons.apps),
+              activeColor: Colors.yellow[300]),
         ],
       ),
     );
@@ -314,4 +267,58 @@ int nowNumberWeek() {
     i = 1;
   }
   return i;
+}
+
+//Группированный список расписание
+Widget contTrue(List<SheduleFalse> _group) {
+  return Container(
+    decoration: BoxDecoration(
+      gradient: LinearGradient(
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+        stops: [0, 0.1, 0.5, 0.8, 1],
+        colors: [
+          Color(0xff03131f),
+          Color(0xff153f65),
+          Color(0xff1085c9),
+          Color(0xff153f65),
+          Color(0xff03131f),
+        ],
+      ),
+    ),
+    child: GroupedListView<SheduleFalse, String>(
+      elements: _group,
+      groupBy: (element) => element.theDaysWeek,
+      groupComparator: (value1, value2) => value2.compareTo(value1),
+      itemComparator: (item2, item1) => item1.theTime.compareTo(item2.theTime),
+      order: GroupedListOrder.DESC,
+      useStickyGroupSeparators: false,
+      groupSeparatorBuilder: (String value) => Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Text(
+          numberInText(value),
+          textAlign: TextAlign.center,
+          style: TextStyle(
+              color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+        ),
+      ),
+      itemBuilder: (c, element) {
+        return Card(
+          margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
+          child: Container(
+            child: ListTile(
+              leading: Text(
+                element.theTime,
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              title: Text(element.theDiscipline),
+              subtitle: Text(
+                  element.theTypeExperience + " " + element.theAboutTheTeacher),
+              trailing: Text(element.theCorpus + "\n" + element.theAudience),
+            ),
+          ),
+        );
+      },
+    ),
+  );
 }

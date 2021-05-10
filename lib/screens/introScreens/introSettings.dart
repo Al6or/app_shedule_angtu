@@ -1,10 +1,13 @@
 import 'dart:ui';
 
 import 'package:angtu_shedule_flutter/screens/globals.dart';
+import 'package:angtu_shedule_flutter/screens/introScreens/studSettings.dart';
+import 'package:angtu_shedule_flutter/screens/introScreens/teachSettings.dart';
 import 'package:flutter/material.dart';
 
 class IntroSettingScreen extends StatefulWidget {
   static const String routeName = "/introSetting";
+
   @override
   IntroSettingScreenState createState() => IntroSettingScreenState();
 }
@@ -18,21 +21,8 @@ class IntroSettingScreenState extends State<IntroSettingScreen> {
       child: Scaffold(
         body: Container(
           decoration: BoxDecoration(
-              /*   gradient: LinearGradient(
-              begin: Alignment.topRight,
-              end: Alignment.bottomLeft,
-              stops: [0, 0.1, 0.5, 0.8, 1],
-              colors: [
-                Color(0xffedf4fe),
-                Color(0xffc1e3ff),
-                Color(0xff1085c9),
-                Color(0xff153f65),
-                Color(0xff03131f),
-              ],
-            ),
-          ),*/
               image: DecorationImage(
-                  image: AssetImage('assets/images/bg3.jpg'),
+                  image: AssetImage('assets/images/bg7.jpg'),
                   fit: BoxFit.cover)),
           child: BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 50.0, sigmaY: 50.0),
@@ -150,16 +140,18 @@ class IntroSettingScreenState extends State<IntroSettingScreen> {
 void _btNext(BuildContext context) async {
   switch (SharedPrefs().user) {
     case 'студент':
+      SharedPrefs().routeNameSetting = StudSettingScreen.routeName;
       // pop - закрыть текующую страницу
       Navigator.of(context).pop();
       // pushNamed -  перейти к маршруту
-      Navigator.of(context).pushNamed('/student');
+      Navigator.of(context).pushNamed(StudSettingScreen.routeName);
       break;
     case 'преподаватель':
+      SharedPrefs().routeNameSetting = TeachSettingScreen.routeName;
       // pop - закрыть текующую страницу
       Navigator.of(context).pop();
       // pushNamed -  перейти к маршруту
-      Navigator.of(context).pushNamed('/teacher');
+      Navigator.of(context).pushNamed(TeachSettingScreen.routeName);
       break;
     case 'Выбрать пользователя':
       ScaffoldMessenger.of(context).showSnackBar(

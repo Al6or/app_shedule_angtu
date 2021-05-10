@@ -10,12 +10,14 @@ String headGroup = "Группа";
 String headChair = "Кафедра";
 String headFaculty = "Факультет";
 String headShedule = "Расписание";
+String headDate = "Начала семестра";
 
 String selectTeacher = "Выбрать преподавателя";
 String selectGroup = "Выбрать группу";
 String selectChair = "Выбрать кафедру";
 String selectFaculty = "Выбрать факультет";
 String selectUser = "Выбрать пользователя";
+String selectDate = "Выбрать дату";
 
 String valueLoad = "Загрузка...";
 
@@ -25,6 +27,8 @@ const String groupValue = "groupValue";
 const String chairValue = "chairValue";
 const String teacherValue = "teacherValue";
 const String userValue = "userValue";
+const String dateValue = "dateValue";
+const String routeSettingValue = "routeSettingValue";
 
 class SharedPrefs {
   static SharedPreferences _sharedPrefs;
@@ -70,6 +74,21 @@ class SharedPrefs {
 
   set user(String value) {
     _sharedPrefs.setString(userValue, value);
+  }
+
+  //Чтение/запись дата начала семестра
+  String get dateStart => _sharedPrefs.getString(dateValue) ?? selectDate;
+
+  set dateStart(String value) {
+    _sharedPrefs.setString(dateValue, value);
+  }
+
+  //Чтение/запись маршрут для настроек
+  String get routeNameSetting =>
+      _sharedPrefs.getString(routeSettingValue) ?? '';
+
+  set routeNameSetting(String value) {
+    _sharedPrefs.setString(routeSettingValue, value);
   }
 }
 
