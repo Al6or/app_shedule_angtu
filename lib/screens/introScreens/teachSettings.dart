@@ -5,6 +5,7 @@ import 'package:angtu_shedule_flutter/list/ListTeacher.dart';
 import 'package:angtu_shedule_flutter/screens/globals.dart';
 import 'package:angtu_shedule_flutter/screens/home.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class TeachSettingScreen extends StatefulWidget {
   static const String routeName = "/teacher";
@@ -15,6 +16,21 @@ class TeachSettingScreen extends StatefulWidget {
 class IntroSettingScreenState extends State<TeachSettingScreen> {
   String chairValue = SharedPrefs().chair;
   String teacherValue = SharedPrefs().teacher;
+
+  DateTime currentDate = DateTime.now();
+
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime pickedDate = await showDatePicker(
+        context: context,
+        initialDate: currentDate,
+        firstDate: DateTime(2015),
+        lastDate: DateTime(2050));
+    if (pickedDate != null && pickedDate != currentDate)
+      setState(() {
+        currentDate = pickedDate;
+        SharedPrefs().dateStart = DateFormat('dd.MM.yyyy').format(currentDate);
+      });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,6 +81,24 @@ class IntroSettingScreenState extends State<TeachSettingScreen> {
                       ),
                       onTap: () {
                         _awaitReturnValueListTeacher(context);
+                      },
+                    ),
+                  ),
+                  Card(
+                    elevation: 5,
+                    child: ListTile(
+                      leading: Icon(
+                        Icons.group,
+                        color: Color(0xff153f65),
+                      ),
+                      title: Text(headDate),
+                      subtitle: Text(SharedPrefs().dateStart),
+                      trailing: Icon(
+                        Icons.arrow_right,
+                        color: Color(0xff153f65),
+                      ),
+                      onTap: () {
+                        _selectDate(context);
                       },
                     ),
                   ),

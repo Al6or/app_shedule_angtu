@@ -7,9 +7,9 @@ import 'package:angtu_shedule_flutter/screens/exam.dart';
 import 'package:angtu_shedule_flutter/screens/globals.dart';
 import 'package:angtu_shedule_flutter/screens/info.dart';
 import 'package:angtu_shedule_flutter/screens/introScreens/introSettings.dart';
+import 'package:angtu_shedule_flutter/screens/widget/ContainerData.dart';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:grouped_list/grouped_list.dart';
 import 'package:week_of_year/week_of_year.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -22,7 +22,7 @@ class HomeScreen extends StatefulWidget {
 //Подзаголовок в меню
 String whoYou() {
   String who = SharedPrefs().user;
-  if (SharedPrefs().user == 'студент') {
+  if (SharedPrefs().user == headStudent) {
     who += " " + SharedPrefs().group;
   } else {
     who += " " + SharedPrefs().teacher;
@@ -142,8 +142,8 @@ class HomeScreenState extends State<HomeScreen> {
   int _currentIndex = nowNumberWeek();
   PageController _pageController;
 
-  List<SheduleFalse> _groupFalse = [];
-  List<SheduleFalse> _groupTrue = [];
+  List<Shedule> _listFalse = [];
+  List<Shedule> _listTrue = [];
   bool _loading;
 
   @override
@@ -152,18 +152,39 @@ class HomeScreenState extends State<HomeScreen> {
     _pageController = PageController(initialPage: nowNumberWeek());
 
     _loading = true;
-    Services.getShedule(SharedPrefs().group, false).then((group) {
-      setState(() {
-        _groupFalse = group;
-        _loading = false;
+    if (SharedPrefs().user == headStudent) {
+      //расписание если группа
+      //четная неделя
+      Services.getSheduleGroup(SharedPrefs().group, false).then((group) {
+        setState(() {
+          _listFalse = group;
+          _loading = false;
+        });
       });
-    });
-    Services.getShedule(SharedPrefs().group, true).then((group) {
-      setState(() {
-        _groupTrue = group;
-        _loading = false;
+      //Нечетная неделя
+      Services.getSheduleGroup(SharedPrefs().group, true).then((group) {
+        setState(() {
+          _listTrue = group;
+          _loading = false;
+        });
       });
-    });
+    } else {
+      //расписание если преподаватель
+      //четная неделя
+      Services.getSheduleTeacher(SharedPrefs().teacher, false).then((teacher) {
+        setState(() {
+          _listFalse = teacher;
+          _loading = false;
+        });
+      });
+      //Нечетная неделя
+      Services.getSheduleTeacher(SharedPrefs().teacher, true).then((teacher) {
+        setState(() {
+          _listTrue = teacher;
+          _loading = false;
+        });
+      });
+    }
   }
 
   @override
@@ -196,10 +217,8 @@ class HomeScreenState extends State<HomeScreen> {
             setState(() => _currentIndex = index);
           },
           children: <Widget>[
-            //четная неделя
-            contTrue(_groupFalse),
-            //Нечетная неделя
-            contTrue(_groupTrue),
+            containerData(_listFalse),
+            containerData(_listTrue),
           ],
         ),
       ),
@@ -210,7 +229,9 @@ class HomeScreenState extends State<HomeScreen> {
         backgroundColor: Color(0xff153f65),
         selectedIndex: _currentIndex,
         onItemSelected: (index) {
-          setState(() => _currentIndex = index);
+          setState(
+            () => _currentIndex = index,
+          );
           _pageController.jumpToPage(index);
         },
         mainAxisAlignment: MainAxisAlignment.center,
@@ -267,58 +288,4 @@ int nowNumberWeek() {
     i = 1;
   }
   return i;
-}
-
-//Группированный список расписание
-Widget contTrue(List<SheduleFalse> _group) {
-  return Container(
-    decoration: BoxDecoration(
-      gradient: LinearGradient(
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
-        stops: [0, 0.1, 0.5, 0.8, 1],
-        colors: [
-          Color(0xff03131f),
-          Color(0xff153f65),
-          Color(0xff1085c9),
-          Color(0xff153f65),
-          Color(0xff03131f),
-        ],
-      ),
-    ),
-    child: GroupedListView<SheduleFalse, String>(
-      elements: _group,
-      groupBy: (element) => element.theDaysWeek,
-      groupComparator: (value1, value2) => value2.compareTo(value1),
-      itemComparator: (item2, item1) => item1.theTime.compareTo(item2.theTime),
-      order: GroupedListOrder.DESC,
-      useStickyGroupSeparators: false,
-      groupSeparatorBuilder: (String value) => Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Text(
-          numberInText(value),
-          textAlign: TextAlign.center,
-          style: TextStyle(
-              color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
-        ),
-      ),
-      itemBuilder: (c, element) {
-        return Card(
-          margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
-          child: Container(
-            child: ListTile(
-              leading: Text(
-                element.theTime,
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              title: Text(element.theDiscipline),
-              subtitle: Text(
-                  element.theTypeExperience + " " + element.theAboutTheTeacher),
-              trailing: Text(element.theCorpus + "\n" + element.theAudience),
-            ),
-          ),
-        );
-      },
-    ),
-  );
 }

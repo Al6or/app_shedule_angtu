@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 //глобальные переменные
 String headTeacher = "Преподаватель";
+String headStudent = "Студент";
 String headGroup = "Группа";
 String headChair = "Кафедра";
 String headFaculty = "Факультет";

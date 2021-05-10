@@ -5,7 +5,6 @@ import 'package:angtu_shedule_flutter/screens/exam.dart';
 import 'package:angtu_shedule_flutter/screens/globals.dart';
 import 'package:angtu_shedule_flutter/screens/info.dart';
 import 'package:angtu_shedule_flutter/screens/introScreens/introSettings.dart';
-import 'package:angtu_shedule_flutter/screens/introScreens/splash.dart';
 import 'package:angtu_shedule_flutter/screens/introScreens/studSettings.dart';
 import 'package:angtu_shedule_flutter/screens/introScreens/teachSettings.dart';
 import 'package:angtu_shedule_flutter/screens/home.dart';

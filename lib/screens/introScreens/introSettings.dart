@@ -13,7 +13,7 @@ class IntroSettingScreen extends StatefulWidget {
 }
 
 class IntroSettingScreenState extends State<IntroSettingScreen> {
-  final List<String> items = <String>[selectUser, 'студент', 'преподаватель'];
+  final List<String> items = <String>[selectUser, headTeacher, headStudent];
   String selectedItem = selectUser;
   @override
   Widget build(BuildContext context) {
@@ -138,42 +138,40 @@ class IntroSettingScreenState extends State<IntroSettingScreen> {
 }
 
 void _btNext(BuildContext context) async {
-  switch (SharedPrefs().user) {
-    case 'студент':
-      SharedPrefs().routeNameSetting = StudSettingScreen.routeName;
-      // pop - закрыть текующую страницу
-      Navigator.of(context).pop();
-      // pushNamed -  перейти к маршруту
-      Navigator.of(context).pushNamed(StudSettingScreen.routeName);
-      break;
-    case 'преподаватель':
-      SharedPrefs().routeNameSetting = TeachSettingScreen.routeName;
-      // pop - закрыть текующую страницу
-      Navigator.of(context).pop();
-      // pushNamed -  перейти к маршруту
-      Navigator.of(context).pushNamed(TeachSettingScreen.routeName);
-      break;
-    case 'Выбрать пользователя':
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          backgroundColor: Colors.black.withOpacity(0.5),
-          action: SnackBarAction(
-            label: 'ок',
-            textColor: Color(0xff1085c9),
-            onPressed: () {},
-          ),
-          content: const Text('Нужно выбрать что нибудь!'),
-          duration: const Duration(milliseconds: 1500),
-          width: 300, //Ширина
-          padding: const EdgeInsets.symmetric(
-            horizontal: 15,
-          ),
-          behavior: SnackBarBehavior.floating,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(5),
-          ),
+  if (SharedPrefs().user == headStudent) {
+    SharedPrefs().routeNameSetting = StudSettingScreen.routeName;
+    // pop - закрыть текующую страницу
+    Navigator.of(context).pop();
+    // pushNamed -  перейти к маршруту
+    Navigator.of(context).pushNamed(StudSettingScreen.routeName);
+  }
+  if (SharedPrefs().user == headTeacher) {
+    SharedPrefs().routeNameSetting = TeachSettingScreen.routeName;
+    // pop - закрыть текующую страницу
+    Navigator.of(context).pop();
+    // pushNamed -  перейти к маршруту
+    Navigator.of(context).pushNamed(TeachSettingScreen.routeName);
+  }
+  if (SharedPrefs().user == selectUser) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        backgroundColor: Colors.black.withOpacity(0.5),
+        action: SnackBarAction(
+          label: 'ок',
+          textColor: Color(0xff1085c9),
+          onPressed: () {},
         ),
-      );
-      break;
+        content: const Text('Нужно выбрать что нибудь!'),
+        duration: const Duration(milliseconds: 1500),
+        width: 300, //Ширина
+        padding: const EdgeInsets.symmetric(
+          horizontal: 15,
+        ),
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(5),
+        ),
+      ),
+    );
   }
 }

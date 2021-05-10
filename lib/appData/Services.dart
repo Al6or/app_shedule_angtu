@@ -76,20 +76,41 @@ class Services {
 
   //большой список расписание группы/(чет/нечет)
   //../academic_plan_grup_week/{the_grup}/{the_weeks}
-  static Future<List<SheduleFalse>> getShedule(
+  static Future<List<Shedule>> getSheduleGroup(
       String nameGroup, bool week) async {
     String url =
         'https://10.0.2.2:5001/academic_plan_grup_week/$nameGroup/$week';
     try {
       final response = await http.get(Uri.parse(url));
       if (200 == response.statusCode) {
-        final List<SheduleFalse> chairs = sheduleFalseFromJson(response.body);
-        return chairs;
+        final List<Shedule> sheduleGroups = sheduleFalseFromJson(response.body);
+        return sheduleGroups;
       } else {
-        return <SheduleFalse>[] ?? 'Список пуст';
+        return <Shedule>[] ?? 'Список пуст';
       }
     } catch (e) {
-      return <SheduleFalse>[] ?? 'Список пуст';
+      return <Shedule>[] ?? 'Список пуст';
+    }
+  }
+
+  //большой список расписание преподавателя/(чет/нечет)
+  //../academic_plan_peopel_week​/{the_peopel}​/{the_weeks}
+  static Future<List<Shedule>> getSheduleTeacher(
+      String nameTeacher, bool week) async {
+    String url =
+        'https://10.0.2.2:5001/academic_plan_peopel_week/$nameTeacher/$week';
+    try {
+      final response = await http.get(Uri.parse(url));
+      if (200 == response.statusCode) {
+        final List<Shedule> sheduleTeacher =
+            sheduleFalseFromJson(response.body);
+        return sheduleTeacher;
+      } else {
+        print(response.statusCode);
+        return <Shedule>[] ?? 'Список пуст';
+      }
+    } catch (e) {
+      return <Shedule>[] ?? 'Список пуст';
     }
   }
 }

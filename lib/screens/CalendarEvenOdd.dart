@@ -13,7 +13,7 @@ class CalendarEvenOddScreen extends StatefulWidget {
 }
 
 class _CalendarEvenOddState extends State<CalendarEvenOddScreen> {
-  ValueNotifier<List<SheduleFalse>> _selectedEvents;
+  ValueNotifier<List<Shedule>> _selectedEvents;
   CalendarFormat _calendarFormat = CalendarFormat.month;
   RangeSelectionMode _rangeSelectionMode = RangeSelectionMode.toggledOff;
   DateTime _focusedDay = DateTime.now();
@@ -21,8 +21,8 @@ class _CalendarEvenOddState extends State<CalendarEvenOddScreen> {
   DateTime _rangeStart;
   DateTime _rangeEnd;
 
-  List<SheduleFalse> _groupFalse = [];
-  List<SheduleFalse> _groupTrue = [];
+  List<Shedule> _listFalse = [];
+  List<Shedule> _listTrue = [];
 
   DateTime kNow = DateFormat('dd.MM.yyyy').parse(SharedPrefs().dateStart);
   DateTime kFirstDay;
@@ -36,18 +36,35 @@ class _CalendarEvenOddState extends State<CalendarEvenOddScreen> {
 
     _selectedDay = _focusedDay;
     _selectedEvents = ValueNotifier(_getEventsForDay(_selectedDay));
-
-    Services.getShedule(SharedPrefs().group, false).then((group) {
-      setState(() {
-        _groupFalse = group;
+    if (SharedPrefs().user == headStudent) {
+      //расписание если группа
+      //четная неделя
+      Services.getSheduleGroup(SharedPrefs().group, false).then((group) {
+        setState(() {
+          _listFalse = group;
+        });
       });
-    });
-
-    Services.getShedule(SharedPrefs().group, true).then((group) {
-      setState(() {
-        _groupTrue = group;
+      //Нечетная неделя
+      Services.getSheduleGroup(SharedPrefs().group, true).then((group) {
+        setState(() {
+          _listTrue = group;
+        });
       });
-    });
+    } else {
+      //расписание если преподаватель
+      //четная неделя
+      Services.getSheduleTeacher(SharedPrefs().teacher, false).then((teacher) {
+        setState(() {
+          _listFalse = teacher;
+        });
+      });
+      //Нечетная неделя
+      Services.getSheduleTeacher(SharedPrefs().teacher, true).then((teacher) {
+        setState(() {
+          _listTrue = teacher;
+        });
+      });
+    }
   }
 
   @override
@@ -56,18 +73,18 @@ class _CalendarEvenOddState extends State<CalendarEvenOddScreen> {
     super.dispose();
   }
 
-  List<SheduleFalse> _getEventsForDay(DateTime day) {
+  List<Shedule> _getEventsForDay(DateTime day) {
     for (int i = 1; i < 8; i++) {
       if (day.weekOfYear % 2 == 0) {
         //четная/нечетная неделя
         if (day.weekday == i) {
-          return _groupFalse
+          return _listFalse
               .where((element) => element.theDaysWeek == i.toString())
               .toList();
         }
       } else {
         if (day.weekday == i) {
-          return _groupTrue
+          return _listTrue
               .where((element) => element.theDaysWeek == i.toString())
               .toList();
         }
@@ -76,7 +93,7 @@ class _CalendarEvenOddState extends State<CalendarEvenOddScreen> {
     return [];
   }
 
-  List<SheduleFalse> _getEventsForRange(DateTime start, DateTime end) {
+  List<Shedule> _getEventsForRange(DateTime start, DateTime end) {
     // Implementation example
     final days = daysInRange(start, end);
 
@@ -126,7 +143,7 @@ class _CalendarEvenOddState extends State<CalendarEvenOddScreen> {
       ),
       body: Column(
         children: [
-          TableCalendar<SheduleFalse>(
+          TableCalendar<Shedule>(
             locale: 'ru_RU',
             availableCalendarFormats: const {
               CalendarFormat.month: 'Месяц',
@@ -162,13 +179,13 @@ class _CalendarEvenOddState extends State<CalendarEvenOddScreen> {
           ),
           const SizedBox(height: 8.0),
           Expanded(
-            child: ValueListenableBuilder<List<SheduleFalse>>(
+            child: ValueListenableBuilder<List<Shedule>>(
               valueListenable: _selectedEvents,
               builder: (context, value, _) {
                 return ListView.builder(
                   itemCount: value.length,
                   itemBuilder: (context, index) {
-                    SheduleFalse sheduleFalse = value[index];
+                    Shedule sheduleFalse = value[index];
                     return Container(
                       margin: const EdgeInsets.symmetric(
                         horizontal: 12.0,
@@ -179,20 +196,7 @@ class _CalendarEvenOddState extends State<CalendarEvenOddScreen> {
                         border: Border.all(),
                         borderRadius: BorderRadius.circular(5),
                       ),
-                      child: ListTile(
-                        onTap: () => print(sheduleFalse.theDiscipline),
-                        leading: Text(
-                          sheduleFalse.theTime,
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        title: Text(sheduleFalse.theDiscipline),
-                        subtitle: Text(sheduleFalse.theTypeExperience +
-                            " " +
-                            sheduleFalse.theAboutTheTeacher),
-                        trailing: Text(sheduleFalse.theCorpus +
-                            "\n" +
-                            sheduleFalse.theAudience),
-                      ),
+                      child: name(sheduleFalse),
                     );
                   },
                 );
@@ -203,6 +207,24 @@ class _CalendarEvenOddState extends State<CalendarEvenOddScreen> {
       ),
     );
   }
+}
+
+ListTile name(Shedule sheduleFalse) {
+  String name;
+  if (SharedPrefs().user == headStudent) {
+    name = sheduleFalse.theAboutTheTeacher;
+  } else {
+    name = sheduleFalse.theGrups;
+  }
+  return ListTile(
+    leading: Text(
+      sheduleFalse.theTime,
+      style: TextStyle(fontWeight: FontWeight.bold),
+    ),
+    title: Text(sheduleFalse.theDiscipline),
+    subtitle: Text(sheduleFalse.theTypeExperience + " " + name),
+    trailing: Text(sheduleFalse.theCorpus + "\n" + sheduleFalse.theAudience),
+  );
 }
 
 int getHashCode(DateTime key) {

@@ -4,23 +4,24 @@
 
 import 'dart:convert';
 
-List<SheduleFalse> sheduleFalseFromJson(String str) => List<SheduleFalse>.from(
-    json.decode(str).map((x) => SheduleFalse.fromJson(x)));
+List<Shedule> sheduleFalseFromJson(String str) =>
+    List<Shedule>.from(json.decode(str).map((x) => Shedule.fromJson(x)));
 
-String sheduleFalseToJson(List<SheduleFalse> data) =>
+String sheduleFalseToJson(List<Shedule> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-class SheduleFalse {
-  SheduleFalse({
-    this.theWeek,
-    this.theDaysWeek,
-    this.theTime,
-    this.theDiscipline,
-    this.theTypeExperience,
-    this.theAboutTheTeacher,
-    this.theCorpus,
-    this.theAudience,
-  });
+class Shedule {
+  Shedule(
+      {this.theWeek,
+      this.theDaysWeek,
+      this.theTime,
+      this.theDiscipline,
+      this.theTypeExperience,
+      this.theAboutTheTeacher,
+      this.theCorpus,
+      this.theAudience,
+      this.theFaculty,
+      this.theGrups});
 
   String theWeek;
   String theDaysWeek;
@@ -30,8 +31,10 @@ class SheduleFalse {
   String theAboutTheTeacher;
   String theCorpus;
   String theAudience;
+  String theFaculty;
+  String theGrups;
 
-  factory SheduleFalse.fromJson(Map<String, dynamic> json) => SheduleFalse(
+  factory Shedule.fromJson(Map<String, dynamic> json) => Shedule(
         theWeek: json["the_week"],
         theDaysWeek: json["the_days_week"],
         theTime: json["the_time"],
@@ -40,6 +43,8 @@ class SheduleFalse {
         theAboutTheTeacher: json["the_about_the_teacher"],
         theCorpus: json["the_corpus"],
         theAudience: json["the_audience"],
+        theFaculty: json["the_Faculty"],
+        theGrups: json["the_Grups"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -51,5 +56,7 @@ class SheduleFalse {
         "the_about_the_teacher": theAboutTheTeacher,
         "the_corpus": theCorpus,
         "the_audience": theAudience,
+        "the_Faculty": theFaculty,
+        "the_Grups": theGrups,
       };
 }
