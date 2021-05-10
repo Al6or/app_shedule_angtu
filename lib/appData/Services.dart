@@ -1,6 +1,7 @@
 import 'package:angtu_shedule_flutter/models/Chairs.dart';
 import 'package:angtu_shedule_flutter/models/Groups.dart';
 import 'package:angtu_shedule_flutter/models/Faculties.dart';
+import 'package:angtu_shedule_flutter/models/Sesion.dart';
 import 'package:angtu_shedule_flutter/models/Shedule.dart';
 import 'package:angtu_shedule_flutter/models/Teachers.dart';
 import 'package:http/http.dart' as http;
@@ -111,6 +112,24 @@ class Services {
       }
     } catch (e) {
       return <Shedule>[] ?? 'Список пуст';
+    }
+  }
+
+  //большой список расписание преподавателя/(чет/нечет)
+  //../session_people/{the_people}
+  static Future<List<Sesion>> getSesionTeacher(String nameTeacher) async {
+    String url = 'https://10.0.2.2:5001/session_people/$nameTeacher';
+    try {
+      final response = await http.get(Uri.parse(url));
+      if (200 == response.statusCode) {
+        final List<Sesion> sesionTeacher = sesionFromJson(response.body);
+        return sesionTeacher;
+      } else {
+        print(response.statusCode);
+        return <Sesion>[] ?? 'Список пуст';
+      }
+    } catch (e) {
+      return <Sesion>[] ?? 'Список пуст';
     }
   }
 }
