@@ -6,6 +6,8 @@ import 'package:angtu_shedule_flutter/models/Shedule.dart';
 import 'package:angtu_shedule_flutter/models/tutorial.dart';
 import 'package:http/http.dart' as http;
 
+import '../models/House.dart';
+
 class Services {
   //список факультетов
   //../faculty
@@ -176,6 +178,25 @@ class Services {
       }
     } catch (e) {
       return <Tutorial>[] ?? 'Список пуст';
+    }
+  }
+
+  //большой список список корпусов
+  //..​//corpus_inf
+  static Future<List<House>> getHouse() async {
+    try {
+      String url = 'https://10.0.2.2:5001/corpus_inf';
+
+      final response = await http.get(Uri.parse(url));
+      if (200 == response.statusCode) {
+        final List<House> tutorial = houseFromJson(response.body);
+        return tutorial;
+      } else {
+        print(response.statusCode);
+        return <House>[] ?? 'Список пуст';
+      }
+    } catch (e) {
+      return <House>[] ?? 'Список пуст';
     }
   }
 }
