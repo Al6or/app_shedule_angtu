@@ -1,6 +1,6 @@
 //список преподавателей
 import 'package:angtu_shedule_flutter/appData/Services.dart';
-import 'package:angtu_shedule_flutter/models/Teachers.dart';
+import 'package:angtu_shedule_flutter/models/Chairs.dart';
 import 'package:angtu_shedule_flutter/screens/globals.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +12,7 @@ class ListTeacher extends StatefulWidget {
 
 class _ListTeacherState extends State<ListTeacher> {
   String returnNameValue;
-  List<Teachers> _teacher;
+  List<Chairs> _teacher;
   bool _loading;
 
   @override
@@ -39,9 +39,9 @@ class _ListTeacherState extends State<ListTeacher> {
         child: ListView.builder(
           itemCount: null == _teacher ? 0 : _teacher.length,
           itemBuilder: (context, index) {
-            Teachers teacher = _teacher[index];
+            Chairs teacher = _teacher[index];
             return ListTile(
-                title: Text(teacher.theTeacher),
+                title: Text(teacher.thePeople),
                 leading: Icon(
                   Icons.person,
                   color: Color(0xff153f65),
@@ -52,7 +52,7 @@ class _ListTeacherState extends State<ListTeacher> {
                 ),
                 onTap: () {
                   setState(() {
-                    returnNameValue = teacher.theTeacher;
+                    returnNameValue = teacher.thePeople;
                     _sendDataBack(context);
                   });
                 });

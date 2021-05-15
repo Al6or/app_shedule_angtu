@@ -2,12 +2,13 @@ import 'dart:io';
 
 import 'package:angtu_shedule_flutter/appData/Services.dart';
 import 'package:angtu_shedule_flutter/models/Shedule.dart';
-import 'package:angtu_shedule_flutter/screens/CalendarEvenOdd.dart';
-import 'package:angtu_shedule_flutter/screens/exam.dart';
+import 'package:angtu_shedule_flutter/screens/calendarEvenOdd.dart';
+import 'package:angtu_shedule_flutter/screens/Sesion/sesion.dart';
 import 'package:angtu_shedule_flutter/screens/globals.dart';
-import 'package:angtu_shedule_flutter/screens/info.dart';
-import 'package:angtu_shedule_flutter/screens/introScreens/introSettings.dart';
-import 'package:angtu_shedule_flutter/screens/widget/ContainerData.dart';
+import 'package:angtu_shedule_flutter/screens/Informations/info.dart';
+import 'package:angtu_shedule_flutter/screens/StartScreens/introSettings.dart';
+import 'package:angtu_shedule_flutter/screens/Tutorial/tutorial.dart';
+import 'package:angtu_shedule_flutter/screens/Shedule/ContainerShedule.dart';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:week_of_year/week_of_year.dart';
@@ -121,9 +122,9 @@ class HomeScreenState extends State<HomeScreen> {
     //пункты меню
     var myNavChildren = [
       headerChild,
-      getNavItem(Icons.wysiwyg_outlined, headShedule + " семестра",
-          HomeScreen.routeName),
-      getNavItem(Icons.today, headShedule + " сесии", ExamScreen.routeName),
+      getNavItem(Icons.wysiwyg_outlined, headSemestr, HomeScreen.routeName),
+      getNavItem(Icons.today, headSesia, ExamScreen.routeName),
+      getNavItem(Icons.today, headTutorial, ListChairForTutorial.routeName),
       getNavItem(Icons.info, "Информация о унивирситете", InfoScreen.routeName),
       aboutChild,
       getNavItem(Icons.settings, "Настройки", SharedPrefs().routeNameSetting),
@@ -248,34 +249,6 @@ class HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
-}
-
-//функция для замены цифр на слова
-String numberInText(String value) {
-  switch (int.parse(value)) {
-    case 1:
-      value = 'Понедельник';
-      break;
-    case 2:
-      value = 'Вторник';
-      break;
-    case 3:
-      value = 'Среда';
-      break;
-    case 4:
-      value = 'Четверг';
-      break;
-    case 5:
-      value = 'Пятница';
-      break;
-    case 6:
-      value = 'Суббота';
-      break;
-    case 7:
-      value = 'Воскресенье';
-      break;
-  }
-  return value;
 }
 
 //функция для вычисления четной/нечетной недели

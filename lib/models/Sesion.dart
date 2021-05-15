@@ -12,8 +12,6 @@ String sesionToJson(List<Sesion> data) =>
 
 class Sesion {
   Sesion({
-    this.theFaculty,
-    this.theGrups,
     this.theDate,
     this.theTime,
     this.theDiscipline,
@@ -21,10 +19,10 @@ class Sesion {
     this.theAboutTheTeacher,
     this.theCorpus,
     this.theAudience,
+    this.theFaculty,
+    this.theGrups,
   });
 
-  String theFaculty;
-  String theGrups;
   String theDate;
   String theTime;
   String theDiscipline;
@@ -32,6 +30,8 @@ class Sesion {
   String theAboutTheTeacher;
   String theCorpus;
   String theAudience;
+  String theFaculty;
+  String theGrups;
 
   factory Sesion.fromJson(Map<String, dynamic> json) => Sesion(
         theFaculty: json["the_faculty"],

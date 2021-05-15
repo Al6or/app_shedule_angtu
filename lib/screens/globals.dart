@@ -12,6 +12,9 @@ String headChair = "Кафедра";
 String headFaculty = "Факультет";
 String headShedule = "Расписание";
 String headDate = "Начала семестра";
+String headSesia = "Сесия";
+String headSemestr = "Семестр";
+String headTutorial = "Консультация";
 
 String selectTeacher = "Выбрать преподавателя";
 String selectGroup = "Выбрать группу";

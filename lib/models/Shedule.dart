@@ -43,8 +43,8 @@ class Shedule {
         theAboutTheTeacher: json["the_about_the_teacher"],
         theCorpus: json["the_corpus"],
         theAudience: json["the_audience"],
-        theFaculty: json["the_Faculty"],
-        theGrups: json["the_Grups"],
+        theFaculty: json["the_faculty"],
+        theGrups: json["the_grups"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -56,7 +56,7 @@ class Shedule {
         "the_about_the_teacher": theAboutTheTeacher,
         "the_corpus": theCorpus,
         "the_audience": theAudience,
-        "the_Faculty": theFaculty,
-        "the_Grups": theGrups,
+        "the_faculty": theFaculty,
+        "the_grups": theGrups,
       };
 }

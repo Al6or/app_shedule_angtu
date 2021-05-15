@@ -1,13 +1,13 @@
 import 'dart:io';
-
-import 'package:angtu_shedule_flutter/screens/CalendarEvenOdd.dart';
-import 'package:angtu_shedule_flutter/screens/exam.dart';
+import 'package:angtu_shedule_flutter/screens/calendarEvenOdd.dart';
+import 'package:angtu_shedule_flutter/screens/Sesion/sesion.dart';
 import 'package:angtu_shedule_flutter/screens/globals.dart';
-import 'package:angtu_shedule_flutter/screens/info.dart';
-import 'package:angtu_shedule_flutter/screens/introScreens/introSettings.dart';
-import 'package:angtu_shedule_flutter/screens/introScreens/studSettings.dart';
-import 'package:angtu_shedule_flutter/screens/introScreens/teachSettings.dart';
-import 'package:angtu_shedule_flutter/screens/home.dart';
+import 'package:angtu_shedule_flutter/screens/Informations/info.dart';
+import 'package:angtu_shedule_flutter/screens/StartScreens/introSettings.dart';
+import 'package:angtu_shedule_flutter/screens/StartScreens/studSettings.dart';
+import 'package:angtu_shedule_flutter/screens/StartScreens/teachSettings.dart';
+import 'package:angtu_shedule_flutter/screens/Shedule/home.dart';
+import 'package:angtu_shedule_flutter/screens/Tutorial/tutorial.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
@@ -41,6 +41,8 @@ Future<void> main() async {
               TeachSettingScreen(),
           CalendarEvenOddScreen.routeName: (BuildContext context) =>
               CalendarEvenOddScreen(),
+          ListChairForTutorial.routeName: (BuildContext context) =>
+              ListChairForTutorial(),
         },
       )));
 }

@@ -1,8 +1,8 @@
 import 'dart:ui';
 
 import 'package:angtu_shedule_flutter/screens/globals.dart';
-import 'package:angtu_shedule_flutter/screens/introScreens/studSettings.dart';
-import 'package:angtu_shedule_flutter/screens/introScreens/teachSettings.dart';
+import 'package:angtu_shedule_flutter/screens/StartScreens/studSettings.dart';
+import 'package:angtu_shedule_flutter/screens/StartScreens/teachSettings.dart';
 import 'package:flutter/material.dart';
 
 class IntroSettingScreen extends StatefulWidget {

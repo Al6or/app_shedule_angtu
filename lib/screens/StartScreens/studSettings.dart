@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:angtu_shedule_flutter/list/ListFaculty.dart';
 import 'package:angtu_shedule_flutter/list/ListGroup.dart';
 import 'package:angtu_shedule_flutter/screens/globals.dart';
-import 'package:angtu_shedule_flutter/screens/home.dart';
+import 'package:angtu_shedule_flutter/screens/Shedule/home.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
