@@ -1,5 +1,4 @@
 import 'package:angtu_shedule_flutter/appData/Services.dart';
-import 'package:angtu_shedule_flutter/screens/Informations/ContainerInfo.dart';
 import 'package:flutter/material.dart';
 import 'package:grouped_list/grouped_list.dart';
 
@@ -13,7 +12,6 @@ class InfoScreen extends StatefulWidget {
 
 class InfoScreenState extends State<InfoScreen> {
   List<House> _list = [];
-  bool _showContent = false;
 
   @override
   void initState() {
@@ -59,26 +57,38 @@ class InfoScreenState extends State<InfoScreen> {
           order: GroupedListOrder.DESC,
           useStickyGroupSeparators: false,
           groupSeparatorBuilder: (String value) => Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
+            padding: const EdgeInsets.only(top: 20),
+            child: AccordionTitle(
+                value,
+                _list
+                    .where((e) => e.theCorpusName == value)
+                    .map((e) => e.theAddress)
+                    .toSet()
+                    .toString(),
+                _list
+                    .where((e) => e.theCorpusName == value)
+                    .map((e) => e.theRouteNotes)
+                    .toSet()
+                    .toString()),
+            /* Text(
               value,
               textAlign: TextAlign.center,
               style: TextStyle(
                   color: Colors.white,
                   fontSize: 25,
                   fontWeight: FontWeight.bold),
-            ),
+            ),*/
           ),
           itemBuilder: (c, element) {
             return Column(
               children: [
                 Accordion(
-                    element.theCorpusSubdivisionsName,
-                    element.thePeople,
-                    element.thePhone,
-                    element.theEMail,
-                    element.theAddress,
-                    element.theRouteNotes),
+                  element.theCorpusSubdivisionsName,
+                  element.theNameSubdivisions,
+                  element.thePeople,
+                  element.thePhone,
+                  element.theEMail,
+                ),
               ],
             );
           },
@@ -90,14 +100,18 @@ class InfoScreenState extends State<InfoScreen> {
 
 class Accordion extends StatefulWidget {
   final String title;
+  final String theNameSubdivisions;
   final String thePeople;
   final String thePhone;
   final String theEmail;
-  final String theAddress;
-  final String theRouteNotes;
 
-  Accordion(this.title, this.thePeople, this.thePhone, this.theEmail,
-      this.theAddress, this.theRouteNotes);
+  Accordion(
+    this.title,
+    this.theNameSubdivisions,
+    this.thePeople,
+    this.thePhone,
+    this.theEmail,
+  );
   @override
   _AccordionState createState() => _AccordionState();
 }
@@ -136,24 +150,61 @@ class _AccordionState extends State<Accordion> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Row(children: [
-                      Icon(Icons.phone),
-                      Text(widget.thePhone),
-                    ]),
-                    Row(children: [
-                      Icon(Icons.alternate_email),
-                      Text(widget.theEmail),
-                    ]),
+                    Text(widget.theNameSubdivisions),
                     Padding(
                       padding: EdgeInsets.only(bottom: 5),
                     ),
-                    Text(widget.theAddress),
+                    Text(widget.thePhone),
                     Padding(
                       padding: EdgeInsets.only(bottom: 5),
                     ),
-                    Text(widget.theRouteNotes)
+                    Text(widget.theEmail),
                   ],
                 ))
+            : Container()
+      ]),
+    );
+  }
+}
+
+//Корпуса
+class AccordionTitle extends StatefulWidget {
+  final String title;
+  final String theAddress;
+  final String theRouteNotes;
+
+  AccordionTitle(this.title, this.theAddress, this.theRouteNotes);
+  @override
+  _AccordionTitleState createState() => _AccordionTitleState();
+}
+
+class _AccordionTitleState extends State<AccordionTitle> {
+  bool _showContent = false;
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      margin: EdgeInsets.symmetric(vertical: 6, horizontal: 8),
+      child: Column(children: [
+        ListTile(
+          title: Text(widget.title),
+          subtitle: Text(
+              widget.theAddress.replaceAll(RegExp(r"[^а-яА-Я0-9\s.,]+"), '')),
+          trailing: IconButton(
+            icon: Icon(
+                _showContent ? Icons.arrow_drop_up : Icons.arrow_drop_down),
+            onPressed: () {
+              setState(() {
+                _showContent = !_showContent;
+              });
+            },
+          ),
+        ),
+        _showContent
+            ? Container(
+                alignment: Alignment.centerLeft,
+                padding: EdgeInsets.only(bottom: 10, left: 20, right: 5),
+                child: Text(widget.theRouteNotes
+                    .replaceAll(RegExp(r"[^а-яА-Я0-9\s.,«»№/]+"), '')))
             : Container()
       ]),
     );

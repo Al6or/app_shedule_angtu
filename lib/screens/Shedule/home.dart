@@ -145,28 +145,24 @@ class HomeScreenState extends State<HomeScreen> {
 
   List<Shedule> _listFalse = [];
   List<Shedule> _listTrue = [];
-  bool _loading;
 
   @override
   void initState() {
     super.initState();
     _pageController = PageController(initialPage: nowNumberWeek());
 
-    _loading = true;
     if (SharedPrefs().user == headStudent) {
       //расписание если группа
       //четная неделя
       Services.getSheduleGroup(SharedPrefs().group, false).then((group) {
         setState(() {
           _listFalse = group;
-          _loading = false;
         });
       });
       //Нечетная неделя
       Services.getSheduleGroup(SharedPrefs().group, true).then((group) {
         setState(() {
           _listTrue = group;
-          _loading = false;
         });
       });
     } else {
@@ -175,14 +171,12 @@ class HomeScreenState extends State<HomeScreen> {
       Services.getSheduleTeacher(SharedPrefs().teacher, false).then((teacher) {
         setState(() {
           _listFalse = teacher;
-          _loading = false;
         });
       });
       //Нечетная неделя
       Services.getSheduleTeacher(SharedPrefs().teacher, true).then((teacher) {
         setState(() {
           _listTrue = teacher;
-          _loading = false;
         });
       });
     }

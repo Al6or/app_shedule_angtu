@@ -13,9 +13,9 @@ import 'package:intl/date_symbol_data_local.dart';
 
 bool _load() {
   bool n = false;
-  if (SharedPrefs().group != selectGroup &&
-      SharedPrefs().user != selectUser &&
-      SharedPrefs().teacher != selectTeacher) {
+  if (SharedPrefs().user != selectUser &&
+      (SharedPrefs().teacher != selectTeacher ||
+          SharedPrefs().group != selectGroup)) {
     n = true;
   }
   return n;
