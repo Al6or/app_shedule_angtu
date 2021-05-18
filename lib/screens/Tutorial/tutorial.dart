@@ -38,7 +38,6 @@ class _ListChairForTutorialState extends State<ListChairForTutorial> {
     return Scaffold(
       appBar: AppBar(
         title: Text(_loading ? valueLoad : selectChair),
-        backgroundColor: Color(0xff153f65),
       ),
       body: Container(
         color: Colors.white,
@@ -122,7 +121,6 @@ class TutorialScreenState extends State<TutorialScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(_returnNameValue),
-        backgroundColor: Color(0xff153f65),
       ),
       body: SizedBox.expand(
         child: PageView(

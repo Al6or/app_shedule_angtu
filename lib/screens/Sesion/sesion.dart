@@ -38,8 +38,7 @@ class ExamScreenState extends State<ExamScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Сессия'),
-        backgroundColor: Color(0xff153f65),
+        title: Text(headSesia),
       ),
       body: SizedBox.expand(
         child: containerDataSesion(_list),

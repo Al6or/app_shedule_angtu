@@ -32,7 +32,6 @@ class _ListChairState extends State<ListChair> {
     return Scaffold(
       appBar: AppBar(
         title: Text(_loading ? valueLoad : selectChair),
-        backgroundColor: Color(0xff153f65),
       ),
       body: Container(
         color: Colors.white,

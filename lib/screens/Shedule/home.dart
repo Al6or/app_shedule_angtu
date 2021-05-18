@@ -54,8 +54,8 @@ class HomeScreenState extends State<HomeScreen> {
             end: Alignment.bottomLeft,
             stops: [0, 0.1, 0.5, 0.8, 1],
             colors: [
-              Color(0xffedf4fe),
-              Color(0xffc1e3ff),
+              Color(0xff03131f),
+              Color(0xff153f65),
               Color(0xff1085c9),
               Color(0xff153f65),
               Color(0xff03131f),
@@ -193,7 +193,6 @@ class HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(headShedule),
-        backgroundColor: Color(0xff153f65),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.calendar_today),
@@ -238,7 +237,7 @@ class HomeScreenState extends State<HomeScreen> {
           BottomNavyBarItem(
               title: Text('Нечётная'),
               icon: Icon(Icons.apps),
-              activeColor: Colors.yellow[300]),
+              activeColor: Color(0xffc0c0c0)),
         ],
       ),
     );

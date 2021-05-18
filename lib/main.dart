@@ -26,6 +26,16 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SharedPrefs().init();
   initializeDateFormatting().then((_) => runApp(MaterialApp(
+        theme: ThemeData(
+          primaryColor: Color(0xff153f65), //appbar Very dark blue
+
+          //fontFamily: 'Georgia',
+          textTheme: TextTheme(
+              // headline1: TextStyle(fontSize: 72.0, fontWeight: FontWeight.bold),
+              // headline6: TextStyle(fontSize: 36.0, fontStyle: FontStyle.italic),
+              // bodyText2: TextStyle(color: Colors.white),
+              ),
+        ),
         debugShowCheckedModeBanner: false,
         home: _load() ? HomeScreen() : IntroSettingScreen(),
         routes: <String, WidgetBuilder>{

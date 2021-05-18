@@ -22,10 +22,11 @@ class IntroSettingScreenState extends State<IntroSettingScreen> {
         body: Container(
           decoration: BoxDecoration(
               image: DecorationImage(
-                  image: AssetImage('assets/images/bg7.jpg'),
+                  image: AssetImage('assets/images/720.png'),
                   fit: BoxFit.cover)),
           child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 50.0, sigmaY: 50.0),
+            filter: ImageFilter.blur(sigmaX: 0.0, sigmaY: 0.0),
+            //filter: ImageFilter.blur(sigmaX: 50.0, sigmaY: 50.0),
             child: Center(
               child: Card(
                 color: Colors.black.withOpacity(0.5),

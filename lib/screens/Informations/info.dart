@@ -30,7 +30,6 @@ class InfoScreenState extends State<InfoScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Корпуса'),
-        backgroundColor: Color(0xff153f65),
       ),
       body: SizedBox.expand(
           child: Container(

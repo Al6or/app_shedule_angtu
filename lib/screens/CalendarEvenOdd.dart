@@ -137,8 +137,8 @@ class _CalendarEvenOddState extends State<CalendarEvenOddScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xffe4e6e9),
       appBar: AppBar(
-        backgroundColor: Color(0xff153f65),
         title: Text(headShedule),
       ),
       body: Column(
@@ -163,7 +163,11 @@ class _CalendarEvenOddState extends State<CalendarEvenOddScreen> {
             calendarStyle: CalendarStyle(
               outsideDaysVisible: false,
               markersMaxCount: 6,
-            ),
+              todayDecoration: BoxDecoration(
+                  color: Color(0xFF4995da), shape: BoxShape.circle),
+              selectedDecoration: BoxDecoration(
+                  color: Color(0xFF316899), shape: BoxShape.circle),
+            ), //#316899 #153f65 #2571b6 #4995da
             onDaySelected: _onDaySelected,
             onRangeSelected: _onRangeSelected,
             onFormatChanged: (format) {
@@ -187,17 +191,22 @@ class _CalendarEvenOddState extends State<CalendarEvenOddScreen> {
                   itemBuilder: (context, index) {
                     Shedule sheduleFalse = value[index];
                     return Container(
-                      margin: const EdgeInsets.symmetric(
-                        horizontal: 12.0,
-                        vertical: 4.0,
-                      ),
-                      decoration: BoxDecoration(
-                        //color: Color(0xff153f65),
-                        border: Border.all(),
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      child: name(sheduleFalse),
-                    );
+                        margin: const EdgeInsets.symmetric(
+                          horizontal: 12.0,
+                          vertical: 2.0,
+                        ),
+                        child: Card(
+                          semanticContainer: true,
+                          clipBehavior: Clip.antiAliasWithSaveLayer,
+                          child: Container(
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  fit: BoxFit.cover,
+                                  image: img(index),
+                                ),
+                              ),
+                              child: name(sheduleFalse, index)),
+                        ));
                   },
                 );
               },
@@ -209,7 +218,26 @@ class _CalendarEvenOddState extends State<CalendarEvenOddScreen> {
   }
 }
 
-ListTile name(Shedule sheduleFalse) {
+//чередование цветов
+AssetImage img(int index) {
+  if (index % 2 == 0) {
+    return AssetImage('assets/images/1920d.png');
+  } else {
+    return AssetImage('assets/images/white.png');
+  }
+}
+
+ListTile name(Shedule sheduleFalse, index) {
+  Color colorIndex;
+  if (index % 2 == 0) {
+    colorIndex = Colors.white;
+  } else {
+    colorIndex = Colors.black;
+  }
+  //вычисление окончание пары
+  String theEndTime = DateFormat('HH:mm').format(DateFormat('HH:mm')
+      .parse(sheduleFalse.theTime)
+      .add(Duration(hours: 1, minutes: 30)));
   String name;
   if (SharedPrefs().user == headStudent) {
     name = sheduleFalse.theAboutTheTeacher;
@@ -218,12 +246,21 @@ ListTile name(Shedule sheduleFalse) {
   }
   return ListTile(
     leading: Text(
-      sheduleFalse.theTime,
-      style: TextStyle(fontWeight: FontWeight.bold),
+      sheduleFalse.theTime + "\n" + theEndTime,
+      style: TextStyle(fontWeight: FontWeight.bold, color: colorIndex),
     ),
-    title: Text(sheduleFalse.theDiscipline),
-    subtitle: Text(sheduleFalse.theTypeExperience + " " + name),
-    trailing: Text(sheduleFalse.theCorpus + "\n" + sheduleFalse.theAudience),
+    title: Text(
+      sheduleFalse.theDiscipline,
+      style: TextStyle(color: colorIndex),
+    ),
+    subtitle: Text(
+      sheduleFalse.theTypeExperience + " " + name,
+      style: TextStyle(color: colorIndex),
+    ),
+    trailing: Text(
+      sheduleFalse.theCorpus + "\n" + sheduleFalse.theAudience,
+      style: TextStyle(color: colorIndex),
+    ),
   );
 }
 

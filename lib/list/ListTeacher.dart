@@ -32,7 +32,6 @@ class _ListTeacherState extends State<ListTeacher> {
     return Scaffold(
       appBar: AppBar(
         title: Text(_loading ? valueLoad : selectTeacher),
-        backgroundColor: Color(0xff153f65),
       ),
       body: Container(
         color: Colors.white,

@@ -36,7 +36,6 @@ class IntroSettingScreenState extends State<TeachSettingScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Color(0xff153f65),
           title: Text("Настройки"),
           automaticallyImplyLeading: false,
         ),
