@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:angtu_shedule_flutter/screens/StartScreens/SplashScreen.dart';
 import 'package:angtu_shedule_flutter/screens/calendarEvenOdd.dart';
 import 'package:angtu_shedule_flutter/screens/Sesion/sesion.dart';
 import 'package:angtu_shedule_flutter/screens/globals.dart';
@@ -11,16 +12,6 @@ import 'package:angtu_shedule_flutter/screens/Tutorial/tutorial.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
-bool _load() {
-  bool n = false;
-  if (SharedPrefs().user != selectUser &&
-      (SharedPrefs().teacher != selectTeacher ||
-          SharedPrefs().group != selectGroup)) {
-    n = true;
-  }
-  return n;
-}
-
 Future<void> main() async {
   HttpOverrides.global = new MyHttpOverrides();
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,16 +19,15 @@ Future<void> main() async {
   initializeDateFormatting().then((_) => runApp(MaterialApp(
         theme: ThemeData(
           primaryColor: Color(0xff153f65), //appbar Very dark blue
-
-          //fontFamily: 'Georgia',
+          fontFamily: 'JostMedium',
           textTheme: TextTheme(
               // headline1: TextStyle(fontSize: 72.0, fontWeight: FontWeight.bold),
               // headline6: TextStyle(fontSize: 36.0, fontStyle: FontStyle.italic),
-              // bodyText2: TextStyle(color: Colors.white),
+              // bodyText2: TextStyle(fontSize: 20),
               ),
         ),
         debugShowCheckedModeBanner: false,
-        home: _load() ? HomeScreen() : IntroSettingScreen(),
+        home: SplashScreen(),
         routes: <String, WidgetBuilder>{
           // определить маршруты
           InfoScreen.routeName: (BuildContext context) => InfoScreen(),

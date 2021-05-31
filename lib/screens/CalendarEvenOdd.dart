@@ -235,9 +235,16 @@ ListTile name(Shedule sheduleFalse, index) {
     colorIndex = Colors.black;
   }
   //вычисление окончание пары
-  String theEndTime = DateFormat('HH:mm').format(DateFormat('HH:mm')
-      .parse(sheduleFalse.theTime)
-      .add(Duration(hours: 1, minutes: 30)));
+  String theEndTime = sheduleFalse.theTime;
+  if (isDate(theEndTime)) {
+    //если не время пустое поле
+    theEndTime = DateFormat('HH:mm').format(DateFormat('HH:mm')
+        .parse(theEndTime)
+        .add(Duration(hours: 1, minutes: 30)));
+  } else {
+    theEndTime = '';
+  }
+
   String name;
   if (SharedPrefs().user == headStudent) {
     name = sheduleFalse.theAboutTheTeacher;
@@ -262,6 +269,16 @@ ListTile name(Shedule sheduleFalse, index) {
       style: TextStyle(color: colorIndex),
     ),
   );
+}
+
+//проверить ялвяется ли строка датой
+bool isDate(String str) {
+  try {
+    DateFormat('HH:mm').parse(str);
+    return true;
+  } catch (e) {
+    return false;
+  }
 }
 
 int getHashCode(DateTime key) {

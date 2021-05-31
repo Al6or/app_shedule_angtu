@@ -7,19 +7,8 @@ import 'package:grouped_list/grouped_list.dart';
 Widget containerTutorial(List<Tutorial> listShedule) {
   return Container(
     decoration: BoxDecoration(
-      gradient: LinearGradient(
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
-        stops: [0, 0.1, 0.5, 0.8, 1],
-        colors: [
-          Color(0xff316899),
-          Color(0xff153f65),
-          Color(0xff1085c9),
-          Color(0xff153f65),
-          Color(0xff316899),
-        ],
-      ),
-    ),
+        image: DecorationImage(
+            image: AssetImage('assets/images/720.png'), fit: BoxFit.cover)),
     child: GroupedListView<Tutorial, String>(
       elements: listShedule,
       groupBy: (element) => element.theDaysWeek,

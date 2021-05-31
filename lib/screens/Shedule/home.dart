@@ -48,35 +48,35 @@ class HomeScreenState extends State<HomeScreen> {
           whoYou(),
           style: TextStyle(fontSize: 15),
         ),
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topRight,
-            end: Alignment.bottomLeft,
-            stops: [0, 0.1, 0.5, 0.8, 1],
-            colors: [
-              Color(0xff03131f),
-              Color(0xff153f65),
-              Color(0xff1085c9),
-              Color(0xff153f65),
-              Color(0xff03131f),
-            ],
-          ),
-        ),
       ),
     );
     //всплывающие окно с информацией
     var aboutChild = AboutListTile(
-        child: Text("Данные о приложение"),
+        child: Text("Данные о приложение",
+            style: TextStyle(
+              color: Color(0xff153f65),
+              fontSize: 16,
+            )),
         applicationName: "Расписание АнГТУ\n30.03.2021 \nv1.0.0",
         applicationVersion:
             "REST API:\nЯкимов Артем Вадимович\nПриложение:\nБорисова Александра Евгеньевна",
         applicationIcon: Icon(Icons.adb),
-        icon: Icon(Icons.topic));
+        icon: Icon(
+          Icons.topic,
+          color: Color(0xff153f65),
+        ));
     //навигация меню
     ListTile getNavItem(var icon, String s, String routeName) {
       return ListTile(
-        leading: Icon(icon),
-        title: Text(s),
+        leading: Icon(
+          icon,
+          color: Color(0xff153f65),
+        ),
+        title: Text(s,
+            style: TextStyle(
+              color: Color(0xff153f65),
+              fontSize: 16,
+            )),
         onTap: () {
           setState(() {
             // pop - закрыть выдвижное меню
@@ -90,8 +90,15 @@ class HomeScreenState extends State<HomeScreen> {
 
 //кнопка сменить пользователя
     var userChild = ListTile(
-      leading: Icon(Icons.sync_rounded),
-      title: Text('Сменить пользователя'),
+      leading: Icon(
+        Icons.sync_rounded,
+        color: Color(0xff153f65),
+      ),
+      title: Text('Сменить пользователя',
+          style: TextStyle(
+            color: Color(0xff153f65),
+            fontSize: 16,
+          )),
       onTap: () {
         setState(() {
           SharedPrefs().fackulty = selectFaculty;
@@ -110,8 +117,15 @@ class HomeScreenState extends State<HomeScreen> {
     );
     //кнопка выйти
     var exitChild = ListTile(
-      leading: Icon(Icons.exit_to_app),
-      title: Text('Выйти'),
+      leading: Icon(
+        Icons.exit_to_app,
+        color: Color(0xff153f65),
+      ),
+      title: Text('Выйти',
+          style: TextStyle(
+            color: Color(0xff153f65),
+            fontSize: 17,
+          )),
       onTap: () {
         setState(() {
           exit(0);

@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:angtu_shedule_flutter/models/Chairs.dart';
 import 'package:angtu_shedule_flutter/models/Groups.dart';
 import 'package:angtu_shedule_flutter/models/Faculties.dart';
@@ -10,14 +8,15 @@ import 'package:http/http.dart' as http;
 
 import '../models/House.dart';
 
+String key = '123';
+
 class Services {
   //список факультетов
   //../faculty
   static Future<List<Faculties>> getFaculties() async {
     try {
       const String url = 'https://10.0.2.2:5001/faculty';
-      final response =
-          await http.get(Uri.parse(url), headers: {'ApiKey': 'MeSexretkey'});
+      final response = await http.get(Uri.parse(url), headers: {'ApiKey': key});
       if (200 == response.statusCode) {
         final List<Faculties> faculties = facultiesFromJson(response.body);
         return faculties;
@@ -35,8 +34,7 @@ class Services {
     try {
       String url = 'https://10.0.2.2:5001/faculty_grup/$nameFaculty';
 
-      final response =
-          await http.get(Uri.parse(url), headers: {'ApiKey': 'MeSexretkey'});
+      final response = await http.get(Uri.parse(url), headers: {'ApiKey': key});
       if (200 == response.statusCode) {
         final List<Groups> groups = groupsFromJson(response.body);
         return groups;
@@ -54,8 +52,7 @@ class Services {
     try {
       String url = 'https://10.0.2.2:5001/cathedra';
 
-      final response =
-          await http.get(Uri.parse(url), headers: {'ApiKey': 'MeSexretkey'});
+      final response = await http.get(Uri.parse(url), headers: {'ApiKey': key});
       if (200 == response.statusCode) {
         final List<Chairs> chairs = chairsFromJson(response.body);
         return chairs;
@@ -73,8 +70,7 @@ class Services {
     try {
       String url = 'https://10.0.2.2:5001/cathedra_people/$nameTeacher';
 
-      final response =
-          await http.get(Uri.parse(url), headers: {'ApiKey': 'MeSexretkey'});
+      final response = await http.get(Uri.parse(url), headers: {'ApiKey': key});
       if (200 == response.statusCode) {
         final List<Chairs> teachers = chairsFromJson(response.body);
         return teachers;
@@ -94,8 +90,7 @@ class Services {
       String url =
           'https://10.0.2.2:5001/academic_plan_grup_week/$nameGroup/$week';
 
-      final response =
-          await http.get(Uri.parse(url), headers: {'ApiKey': 'MeSexretkey'});
+      final response = await http.get(Uri.parse(url), headers: {'ApiKey': key});
       if (200 == response.statusCode) {
         final List<Shedule> sheduleGroups = sheduleFalseFromJson(response.body);
         return sheduleGroups;
@@ -115,8 +110,7 @@ class Services {
       String url =
           'https://10.0.2.2:5001/academic_plan_peopel_week/$nameTeacher/$week';
 
-      final response =
-          await http.get(Uri.parse(url), headers: {'ApiKey': 'MeSexretkey'});
+      final response = await http.get(Uri.parse(url), headers: {'ApiKey': key});
       if (200 == response.statusCode) {
         final List<Shedule> sheduleTeacher =
             sheduleFalseFromJson(response.body);
@@ -136,8 +130,7 @@ class Services {
     try {
       String url = 'https://10.0.2.2:5001/session_people/$nameTeacher';
 
-      final response =
-          await http.get(Uri.parse(url), headers: {'ApiKey': 'MeSexretkey'});
+      final response = await http.get(Uri.parse(url), headers: {'ApiKey': key});
       if (200 == response.statusCode) {
         final List<Sesion> sesionTeacher = sesionFromJson(response.body);
         return sesionTeacher;
@@ -156,8 +149,7 @@ class Services {
     try {
       String url = 'https://10.0.2.2:5001/session_grup/$nameGroup';
 
-      final response =
-          await http.get(Uri.parse(url), headers: {'ApiKey': 'MeSexretkey'});
+      final response = await http.get(Uri.parse(url), headers: {'ApiKey': key});
       if (200 == response.statusCode) {
         final List<Sesion> sesionTeacher = sesionFromJson(response.body);
         return sesionTeacher;
@@ -177,8 +169,7 @@ class Services {
       String url =
           'https://10.0.2.2:5001/consultations_сathedra/$nameChair/$week';
 
-      final response =
-          await http.get(Uri.parse(url), headers: {'ApiKey': 'MeSexretkey'});
+      final response = await http.get(Uri.parse(url), headers: {'ApiKey': key});
       if (200 == response.statusCode) {
         final List<Tutorial> tutorial = tutorialFromJson(response.body);
         return tutorial;
@@ -197,8 +188,7 @@ class Services {
     try {
       String url = 'https://10.0.2.2:5001/corpus_inf';
 
-      final response =
-          await http.get(Uri.parse(url), headers: {'ApiKey': 'MeSexretkey'});
+      final response = await http.get(Uri.parse(url), headers: {'ApiKey': key});
       if (200 == response.statusCode) {
         final List<House> tutorial = houseFromJson(response.body);
         return tutorial;

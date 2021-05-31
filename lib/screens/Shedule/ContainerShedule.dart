@@ -3,6 +3,7 @@ import 'package:angtu_shedule_flutter/screens/globals.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:grouped_list/grouped_list.dart';
+import 'package:intl/intl.dart';
 
 Widget containerData(List<Shedule> listShedule) {
   var tu;
@@ -18,19 +19,8 @@ Widget containerData(List<Shedule> listShedule) {
 Widget _containerGroup(List<Shedule> listShedule) {
   return Container(
     decoration: BoxDecoration(
-      gradient: LinearGradient(
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
-        stops: [0, 0.1, 0.5, 0.8, 1],
-        colors: [
-          Color(0xff03131f),
-          Color(0xff153f65),
-          Color(0xff1085c9),
-          Color(0xff153f65),
-          Color(0xff03131f),
-        ],
-      ),
-    ),
+        image: DecorationImage(
+            image: AssetImage('assets/images/720.png'), fit: BoxFit.cover)),
     child: GroupedListView<Shedule, String>(
       elements: listShedule,
       groupBy: (element) => element.theDaysWeek,
@@ -53,7 +43,7 @@ Widget _containerGroup(List<Shedule> listShedule) {
           child: Container(
             child: ListTile(
               leading: Text(
-                element.theTime,
+                element.theTime + "\n" + _theEndTime(element.theTime),
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
               title: Text(element.theDiscipline),
@@ -66,6 +56,29 @@ Widget _containerGroup(List<Shedule> listShedule) {
       },
     ),
   );
+}
+
+//окончание пары
+String _theEndTime(String theEndTime) {
+  if (isDate(theEndTime)) {
+    //если не время пустое поле
+    theEndTime = DateFormat('HH:mm').format(DateFormat('HH:mm')
+        .parse(theEndTime)
+        .add(Duration(hours: 1, minutes: 30)));
+  } else {
+    theEndTime = '';
+  }
+  return theEndTime;
+}
+
+//проверить ялвяется ли строка датой
+bool isDate(String str) {
+  try {
+    DateFormat('HH:mm').parse(str);
+    return true;
+  } catch (e) {
+    return false;
+  }
 }
 
 //загружаются данные расписания по преподавателя
@@ -97,7 +110,7 @@ Widget _containerTeacher(List<Shedule> listShedule) {
           child: Container(
             child: ListTile(
               leading: Text(
-                element.theTime,
+                element.theTime + "\n" + _theEndTime(element.theTime),
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
               title: Text(element.theDiscipline),

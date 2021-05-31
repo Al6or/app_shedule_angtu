@@ -42,7 +42,7 @@ class IntroSettingScreenState extends State<TeachSettingScreen> {
         body: Container(
             decoration: BoxDecoration(
                 image: DecorationImage(
-                    image: AssetImage('assets/images/bg7.jpg'),
+                    image: AssetImage('assets/images/720.png'),
                     fit: BoxFit.cover)),
             child: BackdropFilter(
                 filter: ImageFilter.blur(sigmaX: 50.0, sigmaY: 50.0),
