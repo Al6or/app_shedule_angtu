@@ -50,26 +50,26 @@
 
 <h2>Результат</h2>
 
-<table>
+<table cellpadding="0" cellspacing="0" border="0">
     <tr>
         <td><img src="https://github.com/Al6or/for_images/blob/master/result/1.jfif" width="300"></td>
         <td><img src="https://github.com/Al6or/for_images/blob/master/result/2.jfif" width="300"></td>
-        <td><img src="" width="300"></td>
+        <td><img src="https://github.com/Al6or/for_images/blob/master/result/3.jfif" width="300"></td>
     </tr>
     <tr>
-        <td><img src="" width="300"></td>
-        <td><img src="" width="300"></td>
-        <td><img src="" width="300"></td>
+        <td><img src="https://github.com/Al6or/for_images/blob/master/result/4.jfif" width="300"></td>
+        <td><img src="https://github.com/Al6or/for_images/blob/master/result/5.jfif" width="300"></td>
+        <td><img src="https://github.com/Al6or/for_images/blob/master/result/6.jpeg" width="300"></td>
     </tr>
     <tr>
-        <td><img src="" width="300"></td>
-        <td><img src="" width="300"></td>
-        <td><img src="" width="300"></td>
+        <td><img src="https://github.com/Al6or/for_images/blob/master/result/7.jfif" width="300"></td>
+        <td><img src="https://github.com/Al6or/for_images/blob/master/result/8.jpeg" width="300"></td>
+        <td><img src="https://github.com/Al6or/for_images/blob/master/result/9.jpeg" width="300"></td>
     </tr>
     <tr>
-        <td><img src="" width="300"></td>
-        <td><img src="" width="300"></td>
-        <td><img src="" width="300"></td>
+        <td><img src="https://github.com/Al6or/for_images/blob/master/result/10.jpeg" width="300"></td>
+        <td><img src="https://github.com/Al6or/for_images/blob/master/result/11.jfif" width="300"></td>
+        <td><img src="https://github.com/Al6or/for_images/blob/master/result/12.jfif" width="300"></td>
     </tr>
  </table>
 
