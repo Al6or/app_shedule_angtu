@@ -49,4 +49,30 @@
 </ul>
 
 <h2>Результат</h2>
-<img src="https://github.com/Al6or/for_images/blob/master/result/1.jfif" width="250">
+
+<table>
+    <tr>
+        <td><img src="https://github.com/Al6or/for_images/blob/master/result/1.jfif" width="300"></td>
+        <td><img src="https://github.com/Al6or/for_images/blob/master/result/2.jfif" width="300"></td>
+        <td><img src="" width="300"></td>
+    </tr>
+    <tr>
+        <td><img src="" width="300"></td>
+        <td><img src="" width="300"></td>
+        <td><img src="" width="300"></td>
+    </tr>
+    <tr>
+        <td><img src="" width="300"></td>
+        <td><img src="" width="300"></td>
+        <td><img src="" width="300"></td>
+    </tr>
+    <tr>
+        <td><img src="" width="300"></td>
+        <td><img src="" width="300"></td>
+        <td><img src="" width="300"></td>
+    </tr>
+ </table>
+
+
+
+
