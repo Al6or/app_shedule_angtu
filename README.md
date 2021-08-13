@@ -17,3 +17,5 @@ samples, guidance on mobile development, and a full API reference.
 
 Результат:
 ![alt dsfd](https://github.com/Al6or/for_images/blob/master/result/1.jfif)
+
+<img src="https://github.com/Al6or/for_images/blob/master/result/1.jfif" width="250">
