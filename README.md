@@ -16,10 +16,10 @@
  </ul>
 
 <p>Авторизация с сетевым сервисом осуществляется с помощью заголовков headers. В заголовках чаще всего передаются данные для авторизации и для выбора возвращаемых/передаваемых данных. На рисунке 1 представлен http запрос клиента и ответ сервера с заголовком и без заголовка. Жизненный цикл данных или диаграмма последовательностей представлена на рисунке 2. </p>
-<img src="https://github.com/Al6or/for_images/blob/master/result/1.png">
+<img src="https://github.com/Al6or/app_shedule_angtu/blob/master/result/1.png">
 <p>Рисунок 1 -	HTTP запрос и ответ</p>
 
-<img src="https://github.com/Al6or/for_images/blob/master/result/2.png"> 
+<img src="https://github.com/Al6or/app_shedule_angtu/blob/master/result/2.png"> 
 <p>Рисунок 2 -	Диаграмма последовательностей или жизненный цикл данных</p>
 <p>В качестве ответа на GET запрос мобильное приложение получает JSON документ. Что бы получить данные происходит следующая цепочка событий, например для получения списка факультетов:</p>
  <ul>
@@ -35,7 +35,7 @@
  </ul>
 
 <p>На рисунке 3 представлена структура мобильного приложения.</p>
-<img src="https://github.com/Al6or/for_images/blob/master/result/3.png">  
+<img src="https://github.com/Al6or/app_shedule_angtu/blob/master/result/3.png">  
 <p>Рисунок 3 -	Структура мобильного приложения</p>
 <ul>
     <li>В папке /appData расположены классы с http запросами, которые взаимодействуют с папкой /models;</li>
@@ -50,7 +50,7 @@
 
 <h2>Результат</h2>
 
-<table cellpadding="0" cellspacing="0" border="0">
+<table >
     <tr>
         <td><img src="https://github.com/Al6or/app_shedule_angtu/blob/master/result/1.jfif" width="300"></td>
         <td><img src="https://github.com/Al6or/app_shedule_angtu/blob/master/result/2.jfif" width="300"></td>
